@@ -1,7 +1,6 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Toplevel
 def regist():
-    login.destroy
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\TUBES PRAKPROK!!!\registrasi\assets\frame0")
 
