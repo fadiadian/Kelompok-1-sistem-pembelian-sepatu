@@ -1,21 +1,16 @@
-# Program Pencatatan Logistik Gudang Sepatu
-
 class GudangSepatu:
-    def __init__(self):
+    def _init_(self):
         self.stok_sepatu = {}  # Dictionary untuk menyimpan stok
-
     def tambah_sepatu(self, model, jumlah):
-        """Menambahkan sepatu ke dalam stok."""
-        if model in self.stok_sepatu:
+         if model in self.stok_sepatu:
             self.stok_sepatu[model] += jumlah
             self.stok_sepatu += jumlah
-        else:
+         else:
             self.stok_sepatu[model] = jumlah
             self.stok_sepatu = jumlah
-        print(f"{jumlah} {model} telah ditambahkan ke stok.")
+            print(f"{jumlah} {model} telah ditambahkan ke stok.")
 
     def kurangi_sepatu(self, model, jumlah):
-        """Mengurangi sepatu dari stok."""
         if model in self.stok_sepatu and self.stok_sepatu[model] >= jumlah:
             self.stok_sepatu[model] -= jumlah
             print(f"{jumlah} {model} telah dikurangi dari stok.")
@@ -70,4 +65,4 @@ def handle_input(gudang):
         
 gudang = GudangSepatu()
 handle_input(gudang)
-
+   
