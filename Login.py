@@ -3,7 +3,7 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Tubes Prokom\Kelompok-1-sistem-pembelian-sepatu\assets\frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Kuliah\smt 2\TUBES FROKOM\Kelompok-1-sistem-pembelian-sepatu\assets\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
