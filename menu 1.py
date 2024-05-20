@@ -48,10 +48,22 @@ def handle_input(gudang):
                 merk = input ("Pilih merk:")
 
                 if merk =="1":
-                     size = int(input("Masukkan jumlah: "))
+                     size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      gudang.tambah_sepatu( jumlah, pilih_jenis, size)
                      print ("Stok berhasil ditambahkan")
-
+                elif merk == "2":
+                     size = int(input("Masukkan ukuran sepatu (37-45): : "))
+                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     print ("Stok berhasil ditambahkan")
+                elif merk == "3":
+                     size = int(input("Masukkan ukuran sepatu (37-45): : "))
+                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     print ("Stok berhasil ditambahkan")
+                else :
+                     size = int(input("Masukkan ukuran sepatu (37-45): : "))
+                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     print ("Stok berhasil ditambahkan")
+                     
                 print("Size tersedia:")
                 print("41")
                 print("42")
