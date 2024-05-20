@@ -3,7 +3,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Toplevel
 def regist():
     cekcek
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\TUBES PRAKPROK!!!\registrasi\assets\frame0")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"D:\TUBES PROKOM\Kelompok-1-sistem-pembelian-sepatu\assets\frame0")
 
 
     def relative_to_assets(path: str) -> Path:
@@ -187,7 +187,7 @@ def regist():
     window.mainloop()
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\TUBES PRAKPROK!!!\Uni Login\assets\frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"D:\TUBES PROKOM\Kelompok-1-sistem-pembelian-sepatu\assets\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
