@@ -38,12 +38,25 @@ def handle_input(gudang):
         pilihan = input("Masukkan pilihan: ")
 
         if pilihan == '1':
-            print("Pilih jenis sepatu:")
-            print(" A")
-            print(" B")
-            print(" C")
-            pilih_jenis = input("Input Jenis Sepatu")
-            if pilih_jenis == "A":
+            print("Daftar jenis sepatu:")
+            print("1. RUNNING SHOES")
+            print("2. SNEAKER SHOES")
+            print("3. FLIP FLOPS")
+            pilih_jenis = input("Input Jenis Sepatu:")
+
+            if pilih_jenis == "1":
+                print("Merk yang tersedia:")
+                print("1. HOKA ARAHI 7")
+                print("2. ASICS GEL-NIMBUS")
+                print("3. NIKE ZOOM FLY")
+                print("4. ADIDAS ADIZERO")
+                merk = input ("Pilih merk:")
+
+                if merk =="1":
+                     size = int(input("Masukkan jumlah: "))
+                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     print ("Stok berhasil ditambahkan")
+
                 print("Size tersedia:")
                 print("41")
                 print("42")
