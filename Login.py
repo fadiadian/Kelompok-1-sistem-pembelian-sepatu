@@ -22,7 +22,7 @@ def proses_login():
     password = entry_pw.get()
     
     if verifikasi_login(username, password):
-        messagebox.showinfo("Sukses", "Login berhasil!")
+        messagebox.showinfo("Sukses", "Login berhasil!") #kalo main menu udah jadi masukin di baris setelah ini
     else:
         messagebox.showerror("Error", "Nama pengguna atau kata sandi salah")
 
@@ -110,7 +110,7 @@ def program_awal():
         anchor="nw",
         text="Silakan login",
         fill="#000000",
-        font=("Poppins Bold", 30 * -1)
+        font=("Poppins Bold", 30 * -1, 'bold')
     )
 
     canvas.create_text(
@@ -119,7 +119,7 @@ def program_awal():
         anchor="nw",
         text="Masukkan Username",
         fill="#000000",
-        font=("Poppins SemiBold", 20 * -1)
+        font=("Poppins SemiBold", 20 * -1, 'bold')
     )
 
     canvas.create_text(
@@ -128,7 +128,7 @@ def program_awal():
         anchor="nw",
         text="Selamat datang!",
         fill="#0057FF",
-        font=("Poppins Bold", 50 * -1)
+        font=("Poppins Bold", 50 * -1, 'bold')
     )
 
     image_image_1 = PhotoImage(
@@ -145,7 +145,7 @@ def program_awal():
         anchor="nw",
         text="Masukkan Sandi",
         fill="#000000",
-        font=("Poppins SemiBold", 20 * -1)
+        font=("Poppins SemiBold", 20 * -1, 'bold')
     )
 
     button_image_2 = PhotoImage(
