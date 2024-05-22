@@ -93,6 +93,59 @@ def handle_input(gudang):
                 print("Pilihan merk tidak valid.")
         else:
             print("Pilihan jenis sepatu tidak valid.")
+        
+    elif pilihan == "2":
+        print("Daftar jenis sepatu:")
+        print("1. RUNNING SHOES")
+        print("2. SNEAKER SHOES")
+        print("3. FLIP FLOPS")
+        pilih_jenis = input("Input Jenis Sepatu:")
+            
+        series_dict = {
+            "1": {
+                "1": ["HOKA", ["ARAHI 7"]],
+                "2": ["ASICS", ["GEL-NIMBUS"]],
+                "3": ["NIKE", ["ZOOM FLY"]],
+                "4": ["ADIDAS", ["ADIZERO"]]
+            },
+            "2": {
+                "1": ["NEW BALANCE", ["550"]],
+                "2": ["NIKE", ["AIR FORCE 1"]],
+                "3": ["ADIDAS", ["YEEZY", "SAMBA"]],
+            },
+            "3": {
+                "1": ["ADIDAS", ["ADILETTE"]],
+                "2": ["NIKE", ["BENASSI"]]
+            }
+        }
+
+        if pilih_jenis in series_dict:
+            print("Merk yang tersedia:")
+            for key, value in series_dict[pilih_jenis].items():
+                print(f"{key}. {value[0]}")
+
+            merk = input("Pilih merk:")
+
+            if merk in series_dict[pilih_jenis]:
+                model, series_list = series_dict[pilih_jenis][merk]
+                print(f"Series yang tersedia untuk {model}:")
+                for idx, series in enumerate(series_list, 1):
+                    print(f"{idx}. {series}")
+                
+                pilih_series = int(input("Pilih series:"))
+                if 1 <= pilih_series <= len(series_list):
+                    series = series_list[pilih_series - 1]
+                    size = int(input("Masukkan ukuran sepatu (37-45): "))
+                    jumlah = int(input("Jumlah yang dibeli: "))
+                    gudang.tambah_sepatu(model, series, size, jumlah)
+                    print("Stok berhasil ditambahkan")
+                else:
+                    print("Pilihan series tidak valid.")
+            else:
+                print("Pilihan merk tidak valid.")
+        else:
+            print("Pilihan jenis sepatu tidak valid.")
+        
 
 gudang = GudangSepatu('Persediaan.csv')
 handle_input(gudang)

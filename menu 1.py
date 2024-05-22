@@ -1,22 +1,16 @@
 class GudangSepatu:
     def _init_(self):
         self.stok_sepatu = {}  # Dictionary untuk menyimpan stok
-    def tambah_sepatu(self, model, jumlah):
-         if model in self.stok_sepatu:
-            self.stok_sepatu[model] += jumlah
-            self.stok_sepatu += jumlah
-         else:
-            self.stok_sepatu[model] = jumlah
-            self.stok_sepatu = jumlah
-            print(f"{jumlah} {model} telah ditambahkan ke stok.")
 
+
+     
+    
     def kurangi_sepatu(self, model, jumlah):
         if model in self.stok_sepatu and self.stok_sepatu[model] >= jumlah:
             self.stok_sepatu[model] -= jumlah
             print(f"{jumlah} {model} telah dikurangi dari stok.")
         else:
             print(f"Stok {model} tidak tersedia.")
-
     def tampilkan_stok(self):
         """Menampilkan stok sepatu yang tersedia."""
         print("Stok Gudang Sepatu:")
@@ -38,9 +32,9 @@ def handle_input(gudang):
             print("1. RUNNING SHOES")
             print("2. SNEAKER SHOES")
             print("3. FLIP FLOPS")
-            pilih_jenis = input("Input Jenis Sepatu:")
+            jenis = input("Input Jenis Sepatu:")
 
-            if pilih_jenis == "1":
+            if jenis == "1":
                 print("Merk yang tersedia:")
                 print("1. HOKA ARAHI 7")
                 print("2. ASICS GEL-NIMBUS")
@@ -51,25 +45,25 @@ def handle_input(gudang):
                 if merk =="1":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 elif merk == "2":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 elif merk == "3":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 else :
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
 
-            if pilih_jenis == "2":
+            if jenis == "2":
                 print("Merk yang tersedia:")
                 print("1. NEW BALANCE 550")
                 print("2. NIKE AIR FORCE 1")
@@ -80,25 +74,25 @@ def handle_input(gudang):
                 if merk =="1":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 elif merk == "2":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 elif merk == "3":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 else :
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
 
-            if pilih_jenis == "3":
+            if jenis == "3":
                 print("Merk yang tersedia:")
                 print("1. ADIDAS ADILETTE")
                 print("2. NIKE BENASSI")
@@ -107,12 +101,12 @@ def handle_input(gudang):
                 if merk =="1":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
                 elif merk == "2":
                      size = int(input("Masukkan ukuran sepatu (37-45): : "))
                      jumlah = int(input("Masukkan jumlah barang: "))
-                     gudang.tambah_sepatu( jumlah, pilih_jenis, size)
+                     gudang.tambah_stok( jumlah, jenis, size, merk)
                      print ("Stok berhasil ditambahkan")
         if pilihan == "3":
             tambah_produk_baru = input("Masukkan Kode Barang, Kategori Sepatu, Merk & Tipe Sepatu: ")
