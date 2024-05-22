@@ -23,6 +23,7 @@ def proses_login():
     
     if verifikasi_login(username, password):
         messagebox.showinfo("Sukses", "Login berhasil!") #kalo main menu udah jadi masukin di baris setelah ini
+        main()
     else:
         messagebox.showerror("Error", "Nama pengguna atau kata sandi salah")
 
