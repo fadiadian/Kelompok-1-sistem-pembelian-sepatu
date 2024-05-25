@@ -2,9 +2,9 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
 import os
-
+import pandas as pd
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
 
 def relative_to_assets(path: str) -> str:
     # Mengembalikan path absolut
@@ -43,9 +43,15 @@ window = Tk()
 def program_awal():
     global window
     global entry_username, entry_pw
+    global random_data
 
     window.geometry("1080x720")
     window.configure(bg="#FFFFFF")
+
+
+    csv_file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan.xlsx')  # Ganti dengan path file CSV Anda
+    all_data = read_data_from_csv(csv_file_path)
+    random_data = all_data.sample(n=8)
 
     canvas = Canvas(
         window,
@@ -187,15 +193,26 @@ def program_awal():
     window.mainloop()
 
 # main ini nanti dimasukin ke login 
+# assets ..._main.png sudah boleh dihapus
+
+# =============== V Ini halaman utama V =================
+
+def read_data_from_csv(file_path):
+    reader = pd.read_excel(file_path)
+    reader = pd.DataFrame(reader)
+    return reader
+
+
+
 def menu():
-    window = Tk()
+    global random_data
+    window_2 = Tk()
 
-    window.geometry("1080x720")
-    window.configure(bg = "#01041A")
-
+    window_2.geometry("1080x720")
+    window_2.configure(bg = "#01041A")
 
     canvas = Canvas(
-        window,
+        window_2,
         bg = "#01041A",
         height = 720,
         width = 1080,
@@ -284,12 +301,11 @@ def menu():
         fill="#FFFFFF",
         font=("Poppins", 25 * -1, "bold")
     )
-
     canvas.create_text(
         53.0,
         218.0,
         anchor="nw",
-        text="Sepatu_1",
+        text=f"{random_data['Merek'].values[0]} {random_data['Seri'].values[0]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -298,7 +314,7 @@ def menu():
         53.0,
         258.0,
         anchor="nw",
-        text="Sepatu_2",
+        text=random_data['Seri'].values[1],
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -553,8 +569,10 @@ def menu():
         fill="#FFFFFF",
         font=("Poppins", 25 * -1, "bold")
     )
-    window.resizable(False, False)
-    window.mainloop()
+    window_2.resizable(False, False)
+    window_2.mainloop()
 
 
 program_awal()
+
+
