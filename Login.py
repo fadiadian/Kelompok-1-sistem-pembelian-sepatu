@@ -3,6 +3,7 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
 import os
 import pandas as pd
+import kasir_copy
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
 
@@ -305,7 +306,7 @@ def menu():
         53.0,
         218.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[0]} {random_data['Seri'].values[0]} ",
+        text=f"{random_data['Merek'].values[0]} {random_data['Seri'].values[0]} (EU {random_data['Ukuran'].values[0]})",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -314,7 +315,7 @@ def menu():
         53.0,
         258.0,
         anchor="nw",
-        text=random_data['Seri'].values[1],
+        text=f"{random_data['Merek'].values[1]} {random_data['Seri'].values[1]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -323,7 +324,7 @@ def menu():
         54.0,
         298.0,
         anchor="nw",
-        text="Sepatu_3",
+        text=f"{random_data['Merek'].values[2]} {random_data['Seri'].values[2]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -332,7 +333,7 @@ def menu():
         54.0,
         338.0,
         anchor="nw",
-        text="Sepatu_4",
+        text=f"{random_data['Merek'].values[3]} {random_data['Seri'].values[3]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -341,7 +342,7 @@ def menu():
         54.0,
         378.0,
         anchor="nw",
-        text="Sepatu_5",
+        text=f"{random_data['Merek'].values[4]} {random_data['Seri'].values[4]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -350,7 +351,7 @@ def menu():
         55.0,
         418.0,
         anchor="nw",
-        text="Sepatu_6",
+        text=f"{random_data['Merek'].values[5]} {random_data['Seri'].values[5]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -359,7 +360,7 @@ def menu():
         54.0,
         498.0,
         anchor="nw",
-        text="Sepatu_8",
+        text=f"{random_data['Merek'].values[6]} {random_data['Seri'].values[7]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -368,13 +369,13 @@ def menu():
         53.0,
         458.0,
         anchor="nw",
-        text="Sepatu_7",
+        text=f"{random_data['Merek'].values[7]} {random_data['Seri'].values[7]} ",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
 
     canvas.create_text(
-        266.0,
+        350.0,
         218.0,
         anchor="nw",
         text="51",
@@ -383,7 +384,7 @@ def menu():
     )
 
     canvas.create_text(
-        266.0,
+        350.0,
         258.0,
         anchor="nw",
         text="52",
@@ -392,7 +393,7 @@ def menu():
     )
 
     canvas.create_text(
-        267.0,
+        350.0,
         298.0,
         anchor="nw",
         text="53",
@@ -401,7 +402,7 @@ def menu():
     )
 
     canvas.create_text(
-        267.0,
+        350.0,
         338.0,
         anchor="nw",
         text="54",
@@ -410,7 +411,7 @@ def menu():
     )
 
     canvas.create_text(
-        267.0,
+        350.0,
         378.0,
         anchor="nw",
         text="55",
@@ -419,7 +420,7 @@ def menu():
     )
 
     canvas.create_text(
-        268.0,
+        350.0,
         418.0,
         anchor="nw",
         text="56",
@@ -428,7 +429,7 @@ def menu():
     )
 
     canvas.create_text(
-        267.0,
+        350.0,
         498.0,
         anchor="nw",
         text="58",
@@ -437,7 +438,7 @@ def menu():
     )
 
     canvas.create_text(
-        266.0,
+        350.0,
         458.0,
         anchor="nw",
         text="57",
@@ -571,6 +572,293 @@ def menu():
     )
     window_2.resizable(False, False)
     window_2.mainloop()
+
+def ud_stok():
+    window_ud_stok = Tk()
+
+    window_ud_stok.geometry("1080x720")
+    window_ud_stok.configure(bg = "#01041A")
+
+
+    canvas = Canvas(
+        window_ud_stok,
+        bg = "#01041A",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1_ud_stock.png"))
+    image_1 = canvas.create_image(
+        541.0,
+        231.0,
+        image=image_image_1
+    )
+
+    image_image_2 = PhotoImage(
+        file=relative_to_assets("image_2_ud_stock.png"))
+    image_2 = canvas.create_image(
+        541.0,
+        417.0,
+        image=image_image_2
+    )
+
+    entry_image_1 = PhotoImage(
+        file=relative_to_assets("entry_1_ud_stock.png"))
+    entry_bg_1 = canvas.create_image(
+        517.5,
+        277.0,
+        image=entry_image_1
+    )
+    entry_1 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_1.place(
+        x=438.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        423.0,
+        206.0,
+        anchor="nw",
+        text="Merek",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_2 = PhotoImage(
+        file=relative_to_assets("entry_2_ud_stock.png"))
+    entry_bg_2 = canvas.create_image(
+        194.0,
+        277.0,
+        image=entry_image_2
+    )
+    entry_2 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_2.place(
+        x=71.0,
+        y=250.0,
+        width=246.0,
+        height=52.0
+    )
+
+    entry_image_3 = PhotoImage(
+        file=relative_to_assets("entry_3_ud_stock.png"))
+    entry_bg_3 = canvas.create_image(
+        259.5,
+        417.0,
+        image=entry_image_3
+    )
+    entry_3 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_3.place(
+        x=202.0,
+        y=390.0,
+        width=115.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        56.0,
+        206.0,
+        anchor="nw",
+        text="Masukkan ID",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    canvas.create_text(
+        56.0,
+        400.0,
+        anchor="nw",
+        text="Jumlah :",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_4 = PhotoImage(
+        file=relative_to_assets("entry_4_ud_stock.png"))
+    entry_bg_4 = canvas.create_image(
+        770.5,
+        417.0,
+        image=entry_image_4
+    )
+    entry_4 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_4.place(
+        x=672.0,
+        y=390.0,
+        width=197.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        422.0,
+        400.0,
+        anchor="nw",
+        text="Harga saat ini :",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_5 = PhotoImage(
+        file=relative_to_assets("entry_5_ud_stock.png"))
+    entry_bg_5 = canvas.create_image(
+        770.5,
+        277.0,
+        image=entry_image_5
+    )
+    entry_5 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_5.place(
+        x=672.0,
+        y=250.0,
+        width=197.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        657.0,
+        206.0,
+        anchor="nw",
+        text="Seri",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_6 = PhotoImage(
+        file=relative_to_assets("entry_6_ud_stock.png"))
+    entry_bg_6 = canvas.create_image(
+        975.0,
+        277.0,
+        image=entry_image_6
+    )
+    entry_6 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_6.place(
+        x=946.0,
+        y=250.0,
+        width=58.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        931.0,
+        206.0,
+        anchor="nw",
+        text="Ukuran",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    canvas.create_text(
+        56.0,
+        32.0,
+        anchor="nw",
+        text="Update Stok",
+        fill="#FFFFFF",
+        font=("Poppins", 40 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        56.0,
+        150.0,
+        anchor="nw",
+        text="Dengan ID",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        423.0,
+        150.0,
+        anchor="nw",
+        text="Manual",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1, 'bold')
+    )
+
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_ud_stock.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: print("button_1 clicked"),
+        bg="#01041A",
+        activebackground="#01041A",
+        relief="flat"
+    )
+    button_1.place(
+        x=115.0,
+        y=554.0,
+        width=360.0,
+        height=56.0
+    )
+
+    button_image_2 = PhotoImage(
+        file=relative_to_assets("button_2_ud_stock.png"))
+    button_2 = Button(
+        image=button_image_2,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: print("button_2 clicked"),
+        bg="#01041A",
+        activebackground="#01041A",
+        relief="flat"
+    )
+    button_2.place(
+        x=608.0,
+        y=554.0,
+        width=360.0,
+        height=56.0
+    )
+
+    canvas.create_rectangle(
+        376.0,
+        149.0,
+        377.0,
+        304.0,
+        fill="#FFFFFF",
+        outline="")
+    window_ud_stok.resizable(False, False)
+    window_ud_stok.mainloop()
 
 
 program_awal()
