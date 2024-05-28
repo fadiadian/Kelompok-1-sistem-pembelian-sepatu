@@ -7,12 +7,14 @@ class GudangSepatu:
 
     def _baca_data_dari_excel(self):
         try:
-            # Coba membaca sheet 'Persediaan'
-            df = pd.read_excel(self.file_path, sheet_name='Perssediaan1')
+            # Coba membaca sheet 'Persediaan1'
+            print(f"Membaca data dari file: {self.file_path}")
+            df = pd.read_excel(self.file_path, sheet_name='Persediaan1')
             if df.empty:
                 print("Sheet 'Persediaan1' kosong atau tidak sesuai format.")
             else:
                 print("Sheet 'Persediaan1' berhasil dibaca.")
+                print(df.head())  # Menampilkan beberapa baris pertama untuk verifikasi
             df = df.set_index(['jenis', 'merek', 'series', 'ukuran'])
             return df
         except FileNotFoundError:
