@@ -248,3 +248,6 @@ def handle_input(gudang):
 
 gudang = GudangSepatu('Persediaan.csv')
 handle_input(gudang)
+if __name__ == "__name__":
+    gudang = GudangSepatu('Persediaan.csv')
+    handle_input(gudang)

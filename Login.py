@@ -3,7 +3,6 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
 import os
 import pandas as pd
-import kasir_copy
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
 
@@ -50,7 +49,7 @@ def program_awal():
     window.configure(bg="#FFFFFF")
 
 
-    csv_file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan.xlsx')  # Ganti dengan path file CSV Anda
+    csv_file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')  # Ganti dengan path file CSV Anda
     all_data = read_data_from_csv(csv_file_path)
     random_data = all_data.sample(n=8)
 
@@ -206,7 +205,6 @@ def read_data_from_csv(file_path):
 
 
 def menu():
-    global random_data
     window_2 = Tk()
 
     window_2.geometry("1080x720")
@@ -221,7 +219,9 @@ def menu():
         highlightthickness = 0,
         relief = "ridge"
     )
-
+    csv_file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')  # Ganti dengan path file CSV Anda
+    all_data = read_data_from_csv(csv_file_path)
+    random_data = all_data.sample(n=8)
     canvas.place(x = 0, y = 0)
     image_image_1 = PhotoImage(
         file=relative_to_assets("menu_image_1.png"))
@@ -306,7 +306,7 @@ def menu():
         53.0,
         218.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[0]} {random_data['Seri'].values[0]} (EU {random_data['Ukuran'].values[0]})",
+        text="fy",
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -315,7 +315,7 @@ def menu():
         53.0,
         258.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[1]} {random_data['Seri'].values[1]} ",
+        text='gu',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -324,7 +324,7 @@ def menu():
         54.0,
         298.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[2]} {random_data['Seri'].values[2]} ",
+        text='hv',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -333,7 +333,7 @@ def menu():
         54.0,
         338.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[3]} {random_data['Seri'].values[3]} ",
+        text='tud',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -342,7 +342,7 @@ def menu():
         54.0,
         378.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[4]} {random_data['Seri'].values[4]} ",
+        text='gjc',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -351,7 +351,7 @@ def menu():
         55.0,
         418.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[5]} {random_data['Seri'].values[5]} ",
+        text='vhj',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -360,7 +360,7 @@ def menu():
         54.0,
         498.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[6]} {random_data['Seri'].values[7]} ",
+        text='zdrdgfc',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -369,7 +369,7 @@ def menu():
         53.0,
         458.0,
         anchor="nw",
-        text=f"{random_data['Merek'].values[7]} {random_data['Seri'].values[7]} ",
+        text='etdgfchg',
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -487,7 +487,7 @@ def menu():
         image=menu_button_image_3,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("menu_button_3 clicked"),
+        command= print('ud_stok()'),
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
