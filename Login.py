@@ -572,7 +572,7 @@ def menu():
     )
     window_2.resizable(False, False)
     window_2.mainloop()
-
+#==================== V GUI tambah stock V ===================
 def ud_stok():
     window_ud_stok = Tk()
 
@@ -860,6 +860,258 @@ def ud_stok():
     window_ud_stok.resizable(False, False)
     window_ud_stok.mainloop()
 
+#=================== V GUI tambah produk baru V ====================
+def tambah_produk():
+    window = Tk()
+
+    window.geometry("1080x720")
+    window.configure(bg = "#01041A")
+
+
+    canvas = Canvas(
+        window,
+        bg = "#01041A",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1_produk_baru.png"))
+    image_1 = canvas.create_image(
+        541.0,
+        231.0,
+        image=image_image_1
+    )
+
+    image_image_2 = PhotoImage(
+        file=relative_to_assets("image_2_produk_baru.png"))
+    image_2 = canvas.create_image(
+        541.0,
+        417.0,
+        image=image_image_2
+    )
+
+    entry_image_1 = PhotoImage(
+        file=relative_to_assets("entry_1_produk_baru.png"))
+    entry_bg_1 = canvas.create_image(
+        454.5,
+        277.0,
+        image=entry_image_1
+    )
+    entry_1 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_1.place(
+        x=375.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        360.0,
+        206.0,
+        anchor="nw",
+        text="Merek",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_2 = PhotoImage(
+        file=relative_to_assets("entry_2_produk_baru.png"))
+    entry_bg_2 = canvas.create_image(
+        212.5,
+        277.0,
+        image=entry_image_2
+    )
+    entry_2 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_2.place(
+        x=133.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        118.0,
+        206.0,
+        anchor="nw",
+        text="Jenis",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_3 = PhotoImage(
+        file=relative_to_assets("entry_3_produk_baru.png"))
+    entry_bg_3 = canvas.create_image(
+        259.5,
+        417.0,
+        image=entry_image_3
+    )
+    entry_3 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_3.place(
+        x=202.0,
+        y=390.0,
+        width=115.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        56.0,
+        400.0,
+        anchor="nw",
+        text="Jumlah :",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_4 = PhotoImage(
+        file=relative_to_assets("entry_4_produk_baru.png"))
+    entry_bg_4 = canvas.create_image(
+        770.5,
+        417.0,
+        image=entry_image_4
+    )
+    entry_4 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_4.place(
+        x=672.0,
+        y=390.0,
+        width=197.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        541.0,
+        400.0,
+        anchor="nw",
+        text="Harga :",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_5 = PhotoImage(
+        file=relative_to_assets("entry_5_produk_baru.png"))
+    entry_bg_5 = canvas.create_image(
+        707.5,
+        277.0,
+        image=entry_image_5
+    )
+    entry_5 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_5.place(
+        x=609.0,
+        y=250.0,
+        width=197.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        594.0,
+        206.0,
+        anchor="nw",
+        text="Seri",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    entry_image_6 = PhotoImage(
+        file=relative_to_assets("entry_6_produk_baru.png"))
+    entry_bg_6 = canvas.create_image(
+        912.0,
+        277.0,
+        image=entry_image_6
+    )
+    entry_6 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_6.place(
+        x=883.0,
+        y=250.0,
+        width=58.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        868.0,
+        206.0,
+        anchor="nw",
+        text="Ukuran",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1)
+    )
+
+    canvas.create_text(
+        56.0,
+        32.0,
+        anchor="nw",
+        text="Tambah Produk Baru",
+        fill="#FFFFFF",
+        font=("Poppins", 40 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        71.0,
+        150.0,
+        anchor="nw",
+        text="Data Sepatu",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1, 'bold')
+    )
+
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_produk_baru.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: print("button_1 clicked"),
+        bg="#01041A",
+        activebackground="#01041A",
+        relief="flat"
+    )
+    button_1.place(
+        x=115.0,
+        y=554.0,
+        width=841.0,
+        height=56.0
+    )
+    window.resizable(False, False)
+    window.mainloop()
 
 program_awal()
 
