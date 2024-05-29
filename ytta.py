@@ -51,7 +51,7 @@ class GudangSepatu:
         if (jenis, merek, series, ukuran) in self.data_sepatu.index:
             if self.data_sepatu.at[(jenis, merek, series, ukuran), 'jumlah'] >= jumlah:
                 self.data_sepatu.at[(jenis, merek, series, ukuran), 'jumlah'] -= jumlah
-                if self.data_sepatu.at((jenis, merek, series, ukuran), 'jumlah') == 0:
+                if self.data_sepatu.at[(jenis, merek, series, ukuran), 'jumlah'] == 0:
                     self.data_sepatu = self.data_sepatu.drop((jenis, merek, series, ukuran))
                 self.data_sepatu = self.data_sepatu.sort_index()
                 self._tulis_data_ke_excel()
@@ -99,7 +99,7 @@ def tampilkan_rincian_dan_subtotal():
     print("\nRincian Pesanan Anda:")
     print("=========================================")
     for item in pesanan:
-        print(f"Nama Menu  : {item['nama']}")
+        print(f"Nama Menu  : {item['series']}")
         print(f"Harga      : {item['harga']}")
         print(f"Kuantitas  : {item['kuantitas']}")
         print(f"Total      : {item['harga'] * item['kuantitas']}")
@@ -133,49 +133,58 @@ def bayar_qris():
 
 def bayar_transfer():
     total = hitung_subtotal()
-    print("1. Bank Jago\n2. Bank Rakyat Indonesia\n3. Bank Negara Indonesia\n4. Bank Syariah Indonesia\n5. Bank CIMB Niaga")
+    print("1. Bank Mandiri\n2. Bank Rakyat Indonesia\n3. Bank Negara Indonesia\n4. Bank BCA\n5. Bank CIMB Niaga")
     rekening_tujuan = int(input("Pilih jenis bank: "))
     if rekening_tujuan == 1:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 104976349648 a.n. Fedo Niam Buya Kharismawanto")
+        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 104976349648 a.n. Fadia Dian Ambarrizka")
     elif rekening_tujuan == 2:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 6632 0102 3871 530 a.n. Bima Aryasakti Persada")
+        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 6632 0102 3871 530 a.n. Ferrel Rafi Elian")
     elif rekening_tujuan == 3:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 1786806019 a.n. Aghniya Ajrun Nisa")
+        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 1786806019 a.n. Atha Nabilah Aurellia")
     elif rekening_tujuan == 4:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 7240491014 a.n. Ferizki Ferdinata")
+        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 7240491014 a.n. Diaz Mondrian")
     elif rekening_tujuan == 5:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 707638220000 a.n. Citta Gurnita Prasista")
+        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 707638220000 a.n. Alifianatha Reyhan")
     else:
         print("Maaf, kode tidak valid")
 
 def rincian_nota():
     for item in pesanan:
         print(f"{item['series']}")
-        print(f"            {item['jumlah']} X    @{item['harga']}       {item['harga'] *   item['kuantitas']}")
+        print(f"            {item['kuantitas']} X    @{item['harga']}       {item['harga'] *   item['kuantitas']}")
         print("------------------------------------")
     total = hitung_subtotal()
     print(f"                 Subtotal   : {total}")
     print("====================================\n")
 
 def nota_pembelian():
-    print("              Toko Sepatu                ")
-    print("     Kota, Provinsi, Indonesia           ")
-    print("           08123456789              ")
-    print("====================================")
-    print("           NOTA PEMBELIAN           ")
-    print("====================================")
-    print(waktu_pemesanan,"             ", nomer_antrian)
-    print("USER                          ",       nama_customer)
-    print("TYPE                          ",       metode_bayar)
-    print("====================================")
+    print("              EINS FOOTWEAR              ")
+    print("         Kota, Provinsi, Indonesia       ")
+    print("             Nomor Antrian               ")
+    print(f"                {nomer_antrian}         ")
+    print("=========================================")
+    print(f"Nama Customer    : {nama_customer}")
+    print(f"Waktu Pemesanan  : {waktu_pemesanan}")
+    print(f"Metode Pembayaran: {metode_bayar}")
+    print("=========================================")
     rincian_nota()
 
 def pilih_menu():
-    print("1. Tampilkan Stok Sepatu\n2. Tambah Stok Sepatu\n3. Tambah Series Sepatu\n4. Trade-In\n5. Kasir\n6. Lihat Rincian dan Subtotal\n7. Selesaikan Pesanan dan Pilih Pembayaran\n0. Batalkan Pesanan")
-    pilih_menu = int(input("Masukkan menu yang ingin dipilih: "))
-    return pilih_menu
+    print("============SELAMAT DATANG DI EINS FOOTWEAR============")
+    print("1. Lihat Stok Sepatu")
+    print("2. Tambah Stok Sepatu")
+    print("3. Tambah Sepatu Baru")
+    print("4. Trade-in Sepatu")
+    print("5. Beli Sepatu")
+    print("6. Tampilkan Pesanan dan Subtotal")
+    print("7. Selesaikan dan Bayar")
+    print("8. Batal")
+    print("====================================================")
+    menu_choice = int(input("Pilih menu: "))
+    return menu_choice
 
 def main_program():
+    global metode_bayar
     input_customer()
     gudang = GudangSepatu("Persediaan1.xlsx")
     while True:
@@ -241,7 +250,10 @@ def main_program():
                     print(f"Kuantitas  : {quantity}\n")
                     
                     pesanan.append({
-                        'nama': chosen_item[2],
+                        'jenis': jenis,
+                        'merek': chosen_item[1],
+                        'series': chosen_item[2],
+                        'ukuran': chosen_item[3],
                         'harga': chosen_item[4],
                         'kuantitas': quantity
                     })
@@ -253,25 +265,30 @@ def main_program():
             tampilkan_rincian_dan_subtotal()
         elif lihat_menu == 7:
             metode_bayar = pilih_metode()
-            if metode_bayar == "Tunai":
-                bayar_tunai()
-                nota_pembelian()
-                break
-            elif metode_bayar == "QRIS":
-                bayar_qris()
-                nota_pembelian()
-                break
-            elif metode_bayar == "Transfer":
-                bayar_transfer()
+            if metode_bayar in ["Tunai", "QRIS", "Transfer"]:
+                if metode_bayar == "Tunai":
+                    bayar_tunai()
+                elif metode_bayar == "QRIS":
+                    bayar_qris()
+                elif metode_bayar == "Transfer":
+                    bayar_transfer()
+
+                kurangi_stok_setelah_pembayaran(gudang)
                 nota_pembelian()
                 break
             else:
                 print("Metode pembayaran tidak valid")
-        elif lihat_menu == 0:
+        elif lihat_menu == 8:
             print("Pesanan dibatalkan")
             break
         else:
             print("Menu tidak valid")
+
+def kurangi_stok_setelah_pembayaran(gudang):
+    for item in pesanan:
+        jenis, merek, series, ukuran = item['jenis'], item['merek'], item['series'], item['ukuran']
+        jumlah = item['kuantitas']
+        gudang.kurangi_sepatu(jenis, merek, series, ukuran, jumlah)
 
 if __name__ == "__main__":
     main_program()
