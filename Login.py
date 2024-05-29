@@ -203,6 +203,9 @@ def read_data_from_csv(file_path):
     return reader
 
 
+def daftar_sepatu_menu(row):
+   tampil_daftar = random_data['series'].values[row]
+   return tampil_daftar
 
 def menu():
     window_2 = Tk()
@@ -246,7 +249,7 @@ def menu():
         image=menu_button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("menu_button_1 clicked"),
+        command=lambda: [print("menu_button_1 clicked"), window_2.destroy(), kasir()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -306,7 +309,7 @@ def menu():
         53.0,
         218.0,
         anchor="nw",
-        text="fy",
+        text=str(random_data['merek'].values[0])+ str(random_data['series'].values[0]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -487,7 +490,7 @@ def menu():
         image=menu_button_image_3,
         borderwidth=0,
         highlightthickness=0,
-        command= print('ud_stok()'),
+        command= lambda: [window_2.destroy(), ud_stok()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -523,7 +526,7 @@ def menu():
         image=menu_button_image_5,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("menu_button_5 clicked"),
+        command=lambda: [print("menu_button_5 clicked"), window_2.destroy(), kasir()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -1112,6 +1115,237 @@ def tambah_produk():
     )
     window.resizable(False, False)
     window.mainloop()
+
+def kasir():
+    window_kasir = Tk()
+
+    window_kasir.geometry("1080x720")
+    window_kasir.configure(bg = "#01041A")
+
+
+    canvas = Canvas(
+        window_kasir,
+        bg = "#01041A",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1_kasir.png"))
+    image_1 = canvas.create_image(
+        317.0,
+        304.0,
+        image=image_image_1
+    )
+
+    image_image_2 = PhotoImage(
+        file=relative_to_assets("image_2_kasir.png"))
+    image_2 = canvas.create_image(
+        816.0,
+        247.0,
+        image=image_image_2
+    )
+
+    image_image_3 = PhotoImage(
+        file=relative_to_assets("image_3_kasir.png"))
+    image_3 = canvas.create_image(
+        842.0,
+        452.0,
+        image=image_image_3
+    )
+
+    entry_image_1 = PhotoImage(
+        file=relative_to_assets("entry_1_kasir.png"))
+    entry_bg_1 = canvas.create_image(
+        454.5,
+        277.0,
+        image=entry_image_1
+    )
+    entry_1 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_1.place(
+        x=375.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        360.0,
+        206.0,
+        anchor="nw",
+        text="Merek",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_2 = PhotoImage(
+        file=relative_to_assets("entry_2_kasir.png"))
+    entry_bg_2 = canvas.create_image(
+        212.5,
+        277.0,
+        image=entry_image_2
+    )
+    entry_2 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_2.place(
+        x=133.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        118.0,
+        206.0,
+        anchor="nw",
+        text="Jenis",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_3 = PhotoImage(
+        file=relative_to_assets("entry_3_kasir.png"))
+    entry_bg_3 = canvas.create_image(
+        904.5,
+        452.0,
+        image=entry_image_3
+    )
+    entry_3 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_3.place(
+        x=847.0,
+        y=425.0,
+        width=115.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        701.0,
+        437.0,
+        anchor="nw",
+        text="Jumlah :",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_4 = PhotoImage(
+        file=relative_to_assets("entry_4_kasir.png"))
+    entry_bg_4 = canvas.create_image(
+        212.5,
+        419.0,
+        image=entry_image_4
+    )
+    entry_4 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_4.place(
+        x=133.0,
+        y=392.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        118.0,
+        348.0,
+        anchor="nw",
+        text="Seri",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_5 = PhotoImage(
+        file=relative_to_assets("entry_5_kasir.png"))
+    entry_bg_5 = canvas.create_image(
+        417.5,
+        419.0,
+        image=entry_image_5
+    )
+    entry_5 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_5.place(
+        x=375.0,
+        y=392.0,
+        width=85.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        360.0,
+        348.0,
+        anchor="nw",
+        text="Ukuran",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    canvas.create_text(
+        56.0,
+        32.0,
+        anchor="nw",
+        text="Kasir",
+        fill="#FFFFFF",
+        font=("Poppins", 40 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        71.0,
+        150.0,
+        anchor="nw",
+        text="Pilih Sepatu",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1, 'bold')
+    )
+
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_kasir.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: print("button_1 clicked"),
+        bg="#01041A",
+        activebackground="#01041A",
+        relief="flat"
+    )
+    button_1.place(
+        x=112.0,
+        y=589.0,
+        width=847.0,
+        height=57.0
+    )
+    window_kasir.resizable(False, False)
+    window_kasir.mainloop()
+
 
 program_awal()
 
