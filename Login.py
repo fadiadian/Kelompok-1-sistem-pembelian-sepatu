@@ -508,7 +508,7 @@ def menu():
         image=menu_button_image_4,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("menu_button_4 clicked"),
+        command=lambda: [print("menu_button_4 clicked"), window_2.destroy(), tambah_produk()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
