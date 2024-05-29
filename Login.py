@@ -3,6 +3,11 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
 import os
 import pandas as pd
+
+import pandas as pd
+import tkinter as tk
+from tkinter import ttk
+
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
 
@@ -309,7 +314,7 @@ def menu():
         53.0,
         218.0,
         anchor="nw",
-        text=str(random_data['merek'].values[0])+ str(random_data['series'].values[0]),
+        text=str(random_data['merek'].values[0])+ '' + str(random_data['series'].values[0])+ ' ukuran '+ str(random_data['ukuran'].values[0]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -318,7 +323,7 @@ def menu():
         53.0,
         258.0,
         anchor="nw",
-        text='gu',
+        text=str(random_data['merek'].values[1])+ '' + str(random_data['series'].values[1])+ ' ukuran '+ str(random_data['ukuran'].values[1]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -327,7 +332,7 @@ def menu():
         54.0,
         298.0,
         anchor="nw",
-        text='hv',
+        text=str(random_data['merek'].values[2])+ '' + str(random_data['series'].values[2])+ ' ukuran '+ str(random_data['ukuran'].values[2]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -336,7 +341,7 @@ def menu():
         54.0,
         338.0,
         anchor="nw",
-        text='tud',
+        text=str(random_data['merek'].values[3])+ '' + str(random_data['series'].values[3])+ ' ukuran '+ str(random_data['ukuran'].values[3]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -345,7 +350,7 @@ def menu():
         54.0,
         378.0,
         anchor="nw",
-        text='gjc',
+        text=str(random_data['merek'].values[4])+ '' + str(random_data['series'].values[4])+ ' ukuran '+ str(random_data['ukuran'].values[4]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -354,7 +359,7 @@ def menu():
         55.0,
         418.0,
         anchor="nw",
-        text='vhj',
+        text=str(random_data['merek'].values[5])+ '' + str(random_data['series'].values[5])+ ' ukuran '+ str(random_data['ukuran'].values[5]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -363,7 +368,7 @@ def menu():
         54.0,
         498.0,
         anchor="nw",
-        text='zdrdgfc',
+        text=str(random_data['merek'].values[6])+ '' + str(random_data['series'].values[6])+ ' ukuran '+ str(random_data['ukuran'].values[6]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -372,7 +377,7 @@ def menu():
         53.0,
         458.0,
         anchor="nw",
-        text='etdgfchg',
+        text=str(random_data['merek'].values[7])+ '' + str(random_data['series'].values[7])+ ' ukuran '+ str(random_data['ukuran'].values[7]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -381,7 +386,7 @@ def menu():
         350.0,
         218.0,
         anchor="nw",
-        text="51",
+        text=str(random_data['jumlah'].values[0]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -390,7 +395,7 @@ def menu():
         350.0,
         258.0,
         anchor="nw",
-        text="52",
+        text=str(random_data['jumlah'].values[1]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -399,7 +404,7 @@ def menu():
         350.0,
         298.0,
         anchor="nw",
-        text="53",
+        text=str(random_data['jumlah'].values[2]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -408,7 +413,7 @@ def menu():
         350.0,
         338.0,
         anchor="nw",
-        text="54",
+        text=str(random_data['jumlah'].values[3]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -417,7 +422,7 @@ def menu():
         350.0,
         378.0,
         anchor="nw",
-        text="55",
+        text=str(random_data['jumlah'].values[4]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -426,7 +431,7 @@ def menu():
         350.0,
         418.0,
         anchor="nw",
-        text="56",
+        text=str(random_data['jumlah'].values[5]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -435,7 +440,7 @@ def menu():
         350.0,
         498.0,
         anchor="nw",
-        text="58",
+        text=str(random_data['jumlah'].values[6]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -444,7 +449,7 @@ def menu():
         350.0,
         458.0,
         anchor="nw",
-        text="57",
+        text=str(random_data['jumlah'].values[7]),
         fill="#FFFFFF",
         font=("Poppins", 20 * -1)
     )
@@ -463,7 +468,7 @@ def menu():
         image=menu_button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("menu_button_2 clicked"),
+        command=lambda: [print("menu_button_2 clicked"), load_and_display_excel_data()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -1346,6 +1351,35 @@ def kasir():
     window_kasir.resizable(False, False)
     window_kasir.mainloop()
 
+
+
+def load_and_display_excel_data():
+    # Membuat jendela utama
+    root = tk.Tk()
+    root.title("Excel to GUI")
+
+    # Membaca data dari file Excel menggunakan pandas
+    file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')
+    df = pd.read_excel(file_path)
+
+    # Membuat Treeview untuk menampilkan data Excel
+    tree = ttk.Treeview(root)
+    tree.pack(fill=tk.BOTH, expand=True)
+
+    # Menambahkan kolom di Treeview
+    tree["column"] = list(df.columns)
+    tree["show"] = "headings"
+    for col in tree["column"]:
+        tree.heading(col, text=col)
+
+    # Menambahkan baris data di Treeview
+    for row in df.itertuples(index=False):
+        tree.insert("", "end", values=row)
+
+    # Menjalankan aplikasi
+    root.mainloop()
+
+# Memanggil fungsi untuk memuat dan menampilkan data Excel
 
 program_awal()
 
