@@ -7,6 +7,7 @@ import pandas as pd
 import pandas as pd
 import tkinter as tk
 from tkinter import ttk
+import ytta
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
@@ -1350,6 +1351,7 @@ def kasir():
     )
     window_kasir.resizable(False, False)
     window_kasir.mainloop()
+    
 
 
 
@@ -1381,6 +1383,56 @@ def load_and_display_excel_data():
 
 # Memanggil fungsi untuk memuat dan menampilkan data Excel
 
+
+
+#================================================================================================================================
+#=================================================== ini program backend ========================================================
+#================================================================================================================================
+def pilih_menu():
+    print("============SELAMAT DATANG DI EINS FOOTWEAR============")
+    print("1. Lihat Stok Sepatu")
+    print("2. Tambah Stok Sepatu")
+    print("3. Tambah Sepatu Baru")
+    print("4. Trade-in Sepatu")
+    print("5. Kasir")
+    print("6. Tampilkan Pesanan dan Subtotal")
+    print("7. Selesaikan dan Bayar")
+    print("8. Batal")
+    print("====================================================")
+    menu_choice = int(input("Pilih menu: "))
+    return menu_choice
+def be_kasir():
+            jenis = input("Masukkan jenis sepatu: ")
+            menu_list = gudang.tampilkan_menu_dari_data(jenis)
+            if menu_list:
+                choice = int(input("Pilih sepatu yang ingin dibeli (masukkan nomor pilihan): "))
+                if 1 <= choice <= len(menu_list):
+                    chosen_item = menu_list[choice - 1]
+                    while True:
+                        try:
+                            quantity = int(input("Masukkan kuantitas: "))
+                            if quantity > 0:
+                                break
+                            else:
+                                print("Kuantitas harus lebih dari 0. Silakan coba lagi.")
+                        except ValueError:
+                            print("Masukkan angka yang valid untuk kuantitas.")
+                    
+                    print("\nAnda memilih :")
+                    print(f"Nama Menu  : {chosen_item[2]}")
+                    print(f"Harga      : {chosen_item[4]}")
+                    print(f"Kuantitas  : {quantity}\n")
+                    
+                    pesanan.append({
+                        'jenis': jenis,
+                        'merek': chosen_item[1],
+                        'series': chosen_item[2],
+                        'ukuran': chosen_item[3],
+                        'harga': chosen_item[4],
+                        'kuantitas': quantity
+                    })
+                else:
+                    print("Nomor pilihan tidak valid.")
 program_awal()
 
 

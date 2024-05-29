@@ -3,13 +3,9 @@ import time
 import random
 from PIL import Image
 
-# Waktu dan tanggal pemesanan
+# Global variables
 waktu_pemesanan = time.strftime("%d-%m-%Y %H:%M", time.localtime())
-
-# Nomor antrian
 nomer_antrian = random.randint(10000, 99999)
-
-# Variabel global untuk menyimpan nama pelanggan, metode pembayaran, dan pesanan
 nama_customer = ""
 metode_bayar = ""
 pesanan = []
@@ -21,16 +17,14 @@ class GudangSepatu:
 
     def _baca_data_dari_excel(self):
         try:
-            print(f"Membaca data dari file: {self.file_path}")
             df = pd.read_excel(self.file_path, sheet_name='Persediaan1')
             df = df.set_index(['jenis', 'merek', 'series', 'ukuran'])
             df = df.sort_index()
             return df
         except FileNotFoundError:
-            print(f"File {self.file_path} tidak ditemukan.")
             return pd.DataFrame(columns=['jenis', 'merek', 'series', 'ukuran', 'jumlah', 'harga']).set_index(['jenis', 'merek', 'series', 'ukuran'])
         except Exception as e:
-            print(f"Terjadi kesalahan: {e}")
+            print(f"Error: {e}")
             return pd.DataFrame(columns=['jenis', 'merek', 'series', 'ukuran', 'jumlah', 'harga']).set_index(['jenis', 'merek', 'series', 'ukuran'])
 
     def _tulis_data_ke_excel(self):
@@ -43,235 +37,66 @@ class GudangSepatu:
         else:
             new_row = pd.DataFrame({'jumlah': [jumlah], 'harga': [harga]}, index=pd.MultiIndex.from_tuples([(jenis, merek, series, ukuran)], names=['jenis', 'merek', 'series', 'ukuran']))
             self.data_sepatu = pd.concat([self.data_sepatu, new_row])
-        self.data_sepatu = self.data_sepatu.sort_index()
         self._tulis_data_ke_excel()
-        print(f"{jumlah} sepatu {series} ukuran {ukuran} berhasil ditambahkan dengan harga {harga}.")
 
     def kurangi_sepatu(self, jenis, merek, series, ukuran, jumlah):
         if (jenis, merek, series, ukuran) in self.data_sepatu.index:
             if self.data_sepatu.at[(jenis, merek, series, ukuran), 'jumlah'] >= jumlah:
                 self.data_sepatu.at[(jenis, merek, series, ukuran), 'jumlah'] -= jumlah
-                if self.data_sepatu.at((jenis, merek, series, ukuran), 'jumlah') == 0:
+                if self.data_sepatu.at[(jenis, merek, series, ukuran), 'jumlah'] == 0:
                     self.data_sepatu = self.data_sepatu.drop((jenis, merek, series, ukuran))
-                self.data_sepatu = self.data_sepatu.sort_index()
                 self._tulis_data_ke_excel()
-                print(f"{jumlah} sepatu {series} ukuran {ukuran} berhasil dikurangi.")
+                return True
             else:
-                print(f"Stok tidak mencukupi untuk {series} ukuran {ukuran}.")
+                print(f"Stok tidak mencukupi untuk {merek} {series} ukuran {ukuran}")
+                return False
         else:
-            print(f"Tidak ada stok untuk {series} ukuran {ukuran}.")
+            print(f"{merek} {series} ukuran {ukuran} tidak ditemukan di gudang")
+            return False
 
-    def tampilkan_stok(self):
-        print("Stok sepatu saat ini:")
-        print(self.data_sepatu)
+def tambah_pesanan(gudang, jenis, pilihan, quantity):
+    sepatu_terpilih = gudang.data_sepatu.loc[jenis].iloc[pilihan - 1]
+    pesanan.append({
+        'jenis': jenis,
+        'merek': sepatu_terpilih.name[0],
+        'series': sepatu_terpilih.name[1],
+        'ukuran': sepatu_terpilih.name[2],
+        'harga': sepatu_terpilih['harga'],
+        'kuantitas': quantity
+    })
 
-    def tampilkan_menu_dari_data(self, jenis_menu):
-        df_filtered = self.data_sepatu.xs(jenis_menu, level='jenis', drop_level=False)
-        if df_filtered.empty:
-            print(f"Tidak ada data untuk jenis sepatu: {jenis_menu}")
-            return []
-        menu_list = []
-        count = 1
-        for index, row in df_filtered.iterrows():
-            jenis, merek, series, ukuran = index
-            print(f"Pilihan {count}:")
-            print(f"  Merek: {merek}")
-            print(f"  Series: {series}")
-            print(f"  Ukuran: {ukuran}")
-            print(f"  Harga: {row['harga']}")
-            print(f"  Jumlah: {row['jumlah']}")
-            print("=========================================")
-            menu_list.append((jenis, merek, series, ukuran, row['harga'], row['jumlah']))
-            count += 1
-        return menu_list
+def pilih_metode_bayar(metode):
+    global metode_bayar
+    metode_bayar = metode
 
-def input_customer():
-    global nama_customer
-    nama_customer = input("Masukkan Nama Anda: ")
-
-def hitung_subtotal():
-    total = 0
+def kurangi_stok_setelah_pembayaran(gudang):
     for item in pesanan:
-        total += item['harga'] * item['kuantitas']
-    return total
+        gudang.kurangi_sepatu(item['jenis'], item['merek'], item['series'], item['ukuran'], item['kuantitas'])
 
-def tampilkan_rincian_dan_subtotal():
-    print("\nRincian Pesanan Anda:")
-    print("=========================================")
-    for item in pesanan:
-        print(f"Nama Menu  : {item['nama']}")
-        print(f"Harga      : {item['harga']}")
-        print(f"Kuantitas  : {item['kuantitas']}")
-        print(f"Total      : {item['harga'] * item['kuantitas']}")
-        print("-----------------------------------------")
-    total = hitung_subtotal()
-    print(f"Subtotal   : {total}")
-    print("=========================================\n")
-
-def pilih_metode():
-    print("========Pilih Metode Pembayaran=========")
-    print("1. Tunai\n2. Qris\n3. Transfer")
-    metode_bayar = int(input("Pilih metode pembayaran: "))
-    if metode_bayar == 1:
-        return "Tunai"
-    elif metode_bayar == 2:
-        return "QRIS"
-    elif metode_bayar == 3:
-        return "Transfer"
-    else:
-        return "Tidak valid"
-
-def bayar_tunai():
-    total = hitung_subtotal()
-    print("Silahkan ambil nota dan siapkan uang sebesar Rp", total, " lalu transaksi di kasir")
-
-def bayar_qris():
-    total = hitung_subtotal()
-    print("Silahkan bayar sebesar Rp", total)
-    qris = Image.open("qris.jpg")
-    qris.show()
-
-def bayar_transfer():
-    total = hitung_subtotal()
-    print("1. Bank Jago\n2. Bank Rakyat Indonesia\n3. Bank Negara Indonesia\n4. Bank Syariah Indonesia\n5. Bank CIMB Niaga")
-    rekening_tujuan = int(input("Pilih jenis bank: "))
-    if rekening_tujuan == 1:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 104976349648 a.n. Fedo Niam Buya Kharismawanto")
-    elif rekening_tujuan == 2:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 6632 0102 3871 530 a.n. Bima Aryasakti Persada")
-    elif rekening_tujuan == 3:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 1786806019 a.n. Aghniya Ajrun Nisa")
-    elif rekening_tujuan == 4:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 7240491014 a.n. Ferizki Ferdinata")
-    elif rekening_tujuan == 5:
-        print("Bayar pesanan anda sebesar Rp", total, "ke rekening tujuan 707638220000 a.n. Citta Gurnita Prasista")
-    else:
-        print("Maaf, kode tidak valid")
-
-def rincian_nota():
-    for item in pesanan:
-        print(f"{item['series']}")
-        print(f"            {item['jumlah']} X    @{item['harga']}       {item['harga'] *   item['kuantitas']}")
-        print("------------------------------------")
-    total = hitung_subtotal()
-    print(f"                 Subtotal   : {total}")
-    print("====================================\n")
-
-def nota_pembelian():
-    print("              Toko Sepatu                ")
-    print("     Kota, Provinsi, Indonesia           ")
-    print("           08123456789              ")
-    print("====================================")
-    print("           NOTA PEMBELIAN           ")
-    print("====================================")
-    print(waktu_pemesanan,"             ", nomer_antrian)
-    print("USER                          ",       nama_customer)
-    print("TYPE                          ",       metode_bayar)
-    print("====================================")
-    rincian_nota()
-
-def pilih_menu():
-    print("1. Tampilkan Stok Sepatu\n2. Tambah Stok Sepatu\n3. Tambah Series Sepatu\n4. Trade-In\n5. Kasir\n6. Lihat Rincian dan Subtotal\n7. Selesaikan Pesanan dan Pilih Pembayaran\n0. Batalkan Pesanan")
-    pilih_menu = int(input("Masukkan menu yang ingin dipilih: "))
-    return pilih_menu
-
-def main_program():
-    input_customer()
-    gudang = GudangSepatu("Persediaan1.xlsx")
+# Example of a main function to tie it together (this would be replaced by GUI event handlers)
+def main():
+    gudang = GudangSepatu("path_to_excel_file.xlsx")
+    nama_customer = input("Nama Customer: ")
     while True:
-        lihat_menu = pilih_menu()
-        if lihat_menu == 1:
-            gudang.tampilkan_stok()
-        elif lihat_menu == 2:
-            jenis = input("Masukkan jenis sepatu: ")
-            menu_list = gudang.tampilkan_menu_dari_data(jenis)
-            if menu_list:
-                choice = int(input("Pilih sepatu yang ingin ditambahkan stoknya (masukkan nomor pilihan): "))
-                if 1 <= choice <= len(menu_list):
-                    chosen_item = menu_list[choice - 1]
-                    jumlah = int(input("Masukkan jumlah sepatu yang ditambahkan: "))
-                    gudang.tambah_sepatu(*chosen_item[:-2], jumlah, chosen_item[-2])
-                else:
-                    print("Nomor pilihan tidak valid.")
-            else:
-                print("Jenis sepatu tidak ditemukan.")
-        elif lihat_menu == 3:
-            jenis = input("Masukkan jenis sepatu: ")
-            merek = input("Masukkan merek sepatu: ")
-            series = input("Masukkan series sepatu: ")
-            ukuran = int(input("Masukkan ukuran sepatu: "))
-            jumlah = int(input("Masukkan jumlah sepatu yang ditambahkan: "))
-            harga = float(input("Masukkan harga sepatu: "))
-            gudang.tambah_sepatu(jenis, merek, series, ukuran, jumlah, harga)
-        elif lihat_menu == 4:
-            jenis = input("Masukkan jenis sepatu yang akan di trade-in: ")
-            merek = input("Masukkan merek sepatu yang akan di trade-in: ")
-            series = input("Masukkan series sepatu yang akan di trade-in: ")
-            ukuran = int(input("Masukkan ukuran sepatu yang akan di trade-in: "))
-            jumlah = int(input("Masukkan jumlah sepatu yang akan di trade-in: "))
-            harga_tradein = float(input("Masukkan harga sepatu trade-in: "))
-            gudang.kurangi_sepatu(jenis, merek, series, ukuran, jumlah)
-            jenis_baru = input("Masukkan jenis sepatu baru: ")
-            merek_baru = input("Masukkan merek sepatu baru: ")
-            series_baru = input("Masukkan series sepatu baru: ")
-            ukuran_baru = int(input("Masukkan ukuran sepatu baru: "))
-            jumlah_baru = int(input("Masukkan jumlah sepatu baru: "))
-            harga_baru = float(input("Masukkan harga sepatu baru: "))
-            gudang.tambah_sepatu(jenis_baru, merek_baru, series_baru, ukuran_baru, jumlah_baru, harga_baru)
-        elif lihat_menu == 5:
-            jenis = input("Masukkan jenis sepatu: ")
-            menu_list = gudang.tampilkan_menu_dari_data(jenis)
-            if menu_list:
-                choice = int(input("Pilih sepatu yang ingin dibeli (masukkan nomor pilihan): "))
-                if 1 <= choice <= len(menu_list):
-                    chosen_item = menu_list[choice - 1]
-                    while True:
-                        try:
-                            quantity = int(input("Masukkan kuantitas: "))
-                            if quantity > 0:
-                                break
-                            else:
-                                print("Kuantitas harus lebih dari 0. Silakan coba lagi.")
-                        except ValueError:
-                            print("Masukkan angka yang valid untuk kuantitas.")
-                    
-                    print("\nAnda memilih :")
-                    print(f"Nama Menu  : {chosen_item[2]}")
-                    print(f"Harga      : {chosen_item[4]}")
-                    print(f"Kuantitas  : {quantity}\n")
-                    
-                    pesanan.append({
-                        'nama': chosen_item[2],
-                        'harga': chosen_item[4],
-                        'kuantitas': quantity
-                    })
-                else:
-                    print("Nomor pilihan tidak valid.")
-            else:
-                print("Jenis sepatu tidak ditemukan.")
-        elif lihat_menu == 6:
-            tampilkan_rincian_dan_subtotal()
-        elif lihat_menu == 7:
-            metode_bayar = pilih_metode()
-            if metode_bayar == "Tunai":
-                bayar_tunai()
-                nota_pembelian()
+        pilihan = input("Menu: 1. Tambah Pesanan 2. Pembayaran 3. Keluar\n")
+        if pilihan == "1":
+            jenis = input("Jenis Sepatu: ")
+            print(gudang.data_sepatu.loc[jenis])
+            pilihan_sepatu = int(input("Pilih sepatu: "))
+            quantity = int(input("Jumlah: "))
+            tambah_pesanan(gudang, jenis, pilihan_sepatu, quantity)
+        elif pilihan == "2":
+            metode = input("Metode Pembayaran (Tunai/QRIS/Transfer): ")
+            pilih_metode_bayar(metode)
+            if metode in ["Tunai", "QRIS", "Transfer"]:
+                kurangi_stok_setelah_pembayaran(gudang)
+                print("Pembayaran berhasil")
                 break
-            elif metode_bayar == "QRIS":
-                bayar_qris()
-                nota_pembelian()
-                break
-            elif metode_bayar == "Transfer":
-                bayar_transfer()
-                nota_pembelian()
-                break
-            else:
-                print("Metode pembayaran tidak valid")
-        elif lihat_menu == 0:
-            print("Pesanan dibatalkan")
+        elif pilihan == "3":
+            print("Keluar")
             break
         else:
-            print("Menu tidak valid")
+            print("Pilihan tidak valid")
 
 if __name__ == "__main__":
-    main_program()
+    main()
