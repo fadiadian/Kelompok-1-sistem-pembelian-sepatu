@@ -5,9 +5,9 @@ import os
 import pandas as pd
 
 import pandas as pd
-import tkinter as tk
-from tkinter import ttk
-import ytta
+import time
+import random
+from PIL import Image
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
@@ -282,13 +282,13 @@ def menu():
         91.5,
         image=entry_image_1
     )
-    entry_1 = Entry(
+    menu_entry_1 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0
     )
-    entry_1.place(
+    menu_entry_1.place(
         x=97.5,
         y=79.0,
         width=156.0,
@@ -532,7 +532,7 @@ def menu():
         image=menu_button_image_5,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("menu_button_5 clicked"), window_2.destroy(), kasir()],
+        command=lambda: [print("menu_button_5 clicked"), window_2.destroy(),beli_sepatu(), kasir()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -623,14 +623,14 @@ def ud_stok():
         277.0,
         image=entry_image_1
     )
-    entry_1 = Entry(
+    ud_stok_entry_1 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_1.place(
+    ud_stok_entry_1.place(
         x=438.0,
         y=250.0,
         width=159.0,
@@ -653,14 +653,14 @@ def ud_stok():
         277.0,
         image=entry_image_2
     )
-    entry_2 = Entry(
+    ud_stok_entry_2 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_2.place(
+    ud_stok_entry_2.place(
         x=71.0,
         y=250.0,
         width=246.0,
@@ -674,14 +674,14 @@ def ud_stok():
         417.0,
         image=entry_image_3
     )
-    entry_3 = Entry(
+    ud_stok_entry_3 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_3.place(
+    ud_stok_entry_3.place(
         x=202.0,
         y=390.0,
         width=115.0,
@@ -713,14 +713,14 @@ def ud_stok():
         417.0,
         image=entry_image_4
     )
-    entry_4 = Entry(
+    ud_stok_entry_4 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_4.place(
+    ud_stok_entry_4.place(
         x=672.0,
         y=390.0,
         width=197.0,
@@ -743,14 +743,14 @@ def ud_stok():
         277.0,
         image=entry_image_5
     )
-    entry_5 = Entry(
+    ud_stok_entry_5 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_5.place(
+    ud_stok_entry_5.place(
         x=672.0,
         y=250.0,
         width=197.0,
@@ -773,14 +773,14 @@ def ud_stok():
         277.0,
         image=entry_image_6
     )
-    entry_6 = Entry(
+    ud_stok_entry_6 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_6.place(
+    ud_stok_entry_6.place(
         x=946.0,
         y=250.0,
         width=58.0,
@@ -825,7 +825,7 @@ def ud_stok():
 
     button_image_1 = PhotoImage(
         file=relative_to_assets("button_1_ud_stock.png"))
-    button_1 = Button(
+    ud_stok_button_1 = Button(
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
@@ -834,7 +834,7 @@ def ud_stok():
         activebackground="#01041A",
         relief="flat"
     )
-    button_1.place(
+    ud_stok_button_1.place(
         x=115.0,
         y=554.0,
         width=360.0,
@@ -843,7 +843,7 @@ def ud_stok():
 
     button_image_2 = PhotoImage(
         file=relative_to_assets("button_2_ud_stock.png"))
-    button_2 = Button(
+    ud_stok_button_2 = Button(
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
@@ -852,7 +852,7 @@ def ud_stok():
         activebackground="#01041A",
         relief="flat"
     )
-    button_2.place(
+    ud_stok_button_2.place(
         x=608.0,
         y=554.0,
         width=360.0,
@@ -911,14 +911,14 @@ def tambah_produk():
         277.0,
         image=entry_image_1
     )
-    entry_1 = Entry(
+    tambah_produk_entry_1 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_1.place(
+    tambah_produk_entry_1.place(
         x=375.0,
         y=250.0,
         width=159.0,
@@ -941,14 +941,14 @@ def tambah_produk():
         277.0,
         image=entry_image_2
     )
-    entry_2 = Entry(
+    tambah_produk_entry_2 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_2.place(
+    tambah_produk_entry_2.place(
         x=133.0,
         y=250.0,
         width=159.0,
@@ -971,14 +971,14 @@ def tambah_produk():
         417.0,
         image=entry_image_3
     )
-    entry_3 = Entry(
+    tambah_produk_entry_3 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_3.place(
+    tambah_produk_entry_3.place(
         x=202.0,
         y=390.0,
         width=115.0,
@@ -1001,14 +1001,14 @@ def tambah_produk():
         417.0,
         image=entry_image_4
     )
-    entry_4 = Entry(
+    tambah_produk_entry_4 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_4.place(
+    tambah_produk_entry_4.place(
         x=672.0,
         y=390.0,
         width=197.0,
@@ -1031,14 +1031,14 @@ def tambah_produk():
         277.0,
         image=entry_image_5
     )
-    entry_5 = Entry(
+    tambah_produk_entry_5 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_5.place(
+    tambah_produk_entry_5.place(
         x=609.0,
         y=250.0,
         width=197.0,
@@ -1061,14 +1061,14 @@ def tambah_produk():
         277.0,
         image=entry_image_6
     )
-    entry_6 = Entry(
+    tambah_produk_entry_6 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_6.place(
+    tambah_produk_entry_6.place(
         x=883.0,
         y=250.0,
         width=58.0,
@@ -1104,7 +1104,7 @@ def tambah_produk():
 
     button_image_1 = PhotoImage(
         file=relative_to_assets("button_1_produk_baru.png"))
-    button_1 = Button(
+    tambah_produk_button_1 = Button(
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
@@ -1113,7 +1113,7 @@ def tambah_produk():
         activebackground="#01041A",
         relief="flat"
     )
-    button_1.place(
+    tambah_produk_button_1.place(
         x=115.0,
         y=554.0,
         width=841.0,
@@ -1171,14 +1171,14 @@ def kasir():
         277.0,
         image=entry_image_1
     )
-    entry_1 = Entry(
+    kasir_entry_1 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_1.place(
+    kasir_entry_1.place(
         x=375.0,
         y=250.0,
         width=159.0,
@@ -1201,14 +1201,14 @@ def kasir():
         277.0,
         image=entry_image_2
     )
-    entry_2 = Entry(
+    kasir_entry_2 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_2.place(
+    kasir_entry_2.place(
         x=133.0,
         y=250.0,
         width=159.0,
@@ -1231,14 +1231,14 @@ def kasir():
         452.0,
         image=entry_image_3
     )
-    entry_3 = Entry(
+    kasir_entry_3 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_3.place(
+    kasir_entry_3.place(
         x=847.0,
         y=425.0,
         width=115.0,
@@ -1261,14 +1261,14 @@ def kasir():
         419.0,
         image=entry_image_4
     )
-    entry_4 = Entry(
+    kasir_entry_4 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_4.place(
+    kasir_entry_4.place(
         x=133.0,
         y=392.0,
         width=159.0,
@@ -1291,14 +1291,14 @@ def kasir():
         419.0,
         image=entry_image_5
     )
-    entry_5 = Entry(
+    kasir_entry_5 = Entry(
         bd=0,
         bg="#D9D9D9",
         fg="#000716",
         highlightthickness=0,
         font=("Poppins", 25 * -1)
     )
-    entry_5.place(
+    kasir_entry_5.place(
         x=375.0,
         y=392.0,
         width=85.0,
@@ -1334,7 +1334,7 @@ def kasir():
 
     button_image_1 = PhotoImage(
         file=relative_to_assets("button_1_kasir.png"))
-    button_1 = Button(
+    kasir_button_1 = Button(
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
@@ -1343,7 +1343,7 @@ def kasir():
         activebackground="#01041A",
         relief="flat"
     )
-    button_1.place(
+    kasir_button_1.place(
         x=112.0,
         y=589.0,
         width=847.0,
@@ -1351,6 +1351,7 @@ def kasir():
     )
     window_kasir.resizable(False, False)
     window_kasir.mainloop()
+    return kasir_entry_1, kasir_entry_2, kasir_entry_3, kasir_entry_5, kasir_entry_4, kasir_button_1
     
 
 
@@ -1388,51 +1389,9 @@ def load_and_display_excel_data():
 #================================================================================================================================
 #=================================================== ini program backend ========================================================
 #================================================================================================================================
-def pilih_menu():
-    print("============SELAMAT DATANG DI EINS FOOTWEAR============")
-    print("1. Lihat Stok Sepatu")
-    print("2. Tambah Stok Sepatu")
-    print("3. Tambah Sepatu Baru")
-    print("4. Trade-in Sepatu")
-    print("5. Kasir")
-    print("6. Tampilkan Pesanan dan Subtotal")
-    print("7. Selesaikan dan Bayar")
-    print("8. Batal")
-    print("====================================================")
-    menu_choice = int(input("Pilih menu: "))
-    return menu_choice
-def be_kasir():
-            jenis = input("Masukkan jenis sepatu: ")
-            menu_list = gudang.tampilkan_menu_dari_data(jenis)
-            if menu_list:
-                choice = int(input("Pilih sepatu yang ingin dibeli (masukkan nomor pilihan): "))
-                if 1 <= choice <= len(menu_list):
-                    chosen_item = menu_list[choice - 1]
-                    while True:
-                        try:
-                            quantity = int(input("Masukkan kuantitas: "))
-                            if quantity > 0:
-                                break
-                            else:
-                                print("Kuantitas harus lebih dari 0. Silakan coba lagi.")
-                        except ValueError:
-                            print("Masukkan angka yang valid untuk kuantitas.")
-                    
-                    print("\nAnda memilih :")
-                    print(f"Nama Menu  : {chosen_item[2]}")
-                    print(f"Harga      : {chosen_item[4]}")
-                    print(f"Kuantitas  : {quantity}\n")
-                    
-                    pesanan.append({
-                        'jenis': jenis,
-                        'merek': chosen_item[1],
-                        'series': chosen_item[2],
-                        'ukuran': chosen_item[3],
-                        'harga': chosen_item[4],
-                        'kuantitas': quantity
-                    })
-                else:
-                    print("Nomor pilihan tidak valid.")
+nama_customer = ""
+metode_bayar = ""
+pesanan = []
 program_awal()
 
 
