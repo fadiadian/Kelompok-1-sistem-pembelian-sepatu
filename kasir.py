@@ -11,6 +11,7 @@ class GudangSepatu:
             df = df.set_index(['model', 'series', 'ukuran'])
             return df
         except FileNotFoundError:
+   
             return pd.DataFrame(columns=['model', 'series', 'ukuran', 'jumlah', 'harga']).set_index(['model', 'series', 'ukuran'])
 
     def _tulis_stok_ke_csv(self):

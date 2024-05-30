@@ -1339,7 +1339,7 @@ def kasir():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: [print("button_1 clicked"), program_kasir(kasir_entry_2, kasir_entry_1, kasir_entry_4,kasir_entry_5, kasir_entry_3)],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1352,7 +1352,6 @@ def kasir():
     )
     window_kasir.resizable(False, False)
     window_kasir.mainloop()
-    return kasir_entry_1, kasir_entry_2, kasir_entry_3, kasir_entry_5, kasir_entry_4, kasir_button_1
     
 
 
@@ -1428,20 +1427,19 @@ import pandas as pd
 
 def edit_data(file_name, kode_produk=None, merek=None, seri=None, ukuran=None, harga=None, jumlah=None):
     # Load data from Excel file
-    print(kode_produk,merek,seri, ukuran, harga, jumlah)
     df = pd.read_excel(file_name)
     
     # If kode_produk is provided, update merek, seri, and ukuran accordingly
     if kode_produk:
-        kode_row = df[df['kode'] == kode_produk].index
-        df.loc[kode_row, ['merek', 'series', 'ukuran']] = [merek, seri, ukuran]
+        kode_row = df[df['kode_produk'] == kode_produk].index
+        df.loc[kode_row, ['merek', 'seri', 'ukuran']] = [merek, seri, ukuran]
     
     # If harga is provided, update harga
     if harga is not None:
         if kode_produk:
             df.loc[kode_row, 'harga'] = harga
         else:
-            data_row = df[(df['merek'] == merek) & (df['series'] == seri) & (df['ukuran'] == ukuran)].index
+            data_row = df[(df['merek'] == merek) & (df['seri'] == seri) & (df['ukuran'] == ukuran)].index
             df.loc[data_row, 'harga'] = harga
     
     # If jumlah is provided, update jumlah
@@ -1449,7 +1447,7 @@ def edit_data(file_name, kode_produk=None, merek=None, seri=None, ukuran=None, h
         if kode_produk:
             df.loc[kode_row, 'jumlah'] = jumlah
         else:
-            data_row = df[(df['merek'] == merek) & (df['series'] == seri) & (df['ukuran'] == ukuran)].index
+            data_row = df[(df['merek'] == merek) & (df['seri'] == seri) & (df['ukuran'] == ukuran)].index
             df.loc[data_row, 'jumlah'] = jumlah
     
     # Save the updated data to the Excel file
@@ -1465,13 +1463,118 @@ def submit_edit(kode_entry,merek_entry,seri_entry,ukuran_entry,harga_entry,jumla
     jumlah = jumlah_entry.get()
     print(kode_produk,merek,seri, ukuran, harga, jumlah)
     # Call edit_data function with user inputs
-    edit_data(os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx'), kode_produk, merek, seri, ukuran, harga, jumlah)
+    edit_data('Persediaan1.xlsx', kode_produk, merek, seri, ukuran, harga, jumlah)
     
     # Show confirmation message
     messagebox.showinfo("Info", "Data telah diubah.")
 
 #==================================================================================================================================
+'''
+def beli_sepatu(data_sepatu, kasir_entry_2):
+    jenis = kasir_entry_2.get()
+    menu_list = tampilkan_menu_dari_data(data_sepatu, str(jenis))
+    if menu_list:
+        choice = int(input("Pilih sepatu yang ingin dibeli (masukkan nomor pilihan): "))
+        if 1 <= choice <= len(menu_list):
+            chosen_item = menu_list[choice - 1]
+            while True:
+                try:
+                    quantity = int(input("Masukkan kuantitas: "))
+                    if quantity > 0:
+                        break
+                    else:
+                        print("Kuantitas harus lebih dari 0. Silakan coba lagi.")
+                except ValueError:
+                    print("Masukkan angka yang valid untuk kuantitas.")
+            
+            print("\nAnda memilih :")
+            print(f"Nama Sepatu  : {chosen_item[1]} {chosen_item[2]}")
+            print(f"Harga        : {chosen_item[5]}")
+            print(f"Kuantitas    : {quantity}\n")
+            
+            pesanan.append({
+                'jenis': jenis,
+                'merek': chosen_item[1],
+                'series': chosen_item[2],
+                'ukuran': chosen_item[3],
+                'harga': chosen_item[5],
+                'kode': chosen_item[4],
+                'kuantitas': quantity
+            })
+        else:
+            print("Nomor pilihan tidak valid.")
+    else:
+        print("Jenis sepatu tidak ditemukan.")
 
-program_awal()
+def tampilkan_menu_dari_data(data_sepatu, jenis_menu):
+    df_filtered = data_sepatu[data_sepatu['jenis'] == jenis_menu]
+    menu_list = []
+    count = 1
+    for index, row in df_filtered.iterrows():
+        jenis = row['jenis']
+        merek = row['merek']
+        series = row['series']
+        ukuran = row['ukuran']
+        kode = row['kode']
+        harga = row['harga']
+        jumlah = row['jumlah']
+        print(f"Pilihan {count}:")
+        print(f"  Merek: {merek}")
+        print(f"  Series: {series}")
+        print(f"  Ukuran: {ukuran}")
+        print(f"  Harga: {harga}")
+        print(f"  Jumlah: {jumlah}")
+        print(f"  Kode: {kode}")
+        print("=========================================")
+        menu_list.append((jenis, merek, series, ukuran, kode, harga, jumlah))
+        count += 1
+    return menu_list
+
+pesanan = []
+
+'''
+
+#===================================================================================================================================
+import pandas as pd
+
+def program_kasir(kasir_entry_2, kasir_entry_1, kasir_entry_4,kasir_entry_5, kasir_entry_3):
+    # Membaca file Excel
+    df = pd.read_excel(os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx'))
+
+    # Meminta input dari pengguna
+    jenis = kasir_entry_2.get()
+    merek = kasir_entry_1.get()
+    series = kasir_entry_4.get()
+    ukuran = kasir_entry_5.get()
+    jumlah = kasir_entry_3.get()
+
+    # Mencari baris yang sesuai di DataFrame
+    item = df[(df['jenis'] == jenis) &
+              (df['merek'] == merek) &
+              (df['series'] == series) &
+              (df['ukuran'] == ukuran)]
+
+    if not item.empty:
+        harga = item['harga'].values[0]
+        stok = item['jumlah'].values[0]
+
+        if stok >= jumlah:
+            total_harga = harga * jumlah
+            sisa_stok = stok - jumlah
+            df.loc[item.index, 'jumlah'] = sisa_stok
+            df.to_excel('Persediaan1.xlsx', index=False)
+            print(f"Harga total: {total_harga}")
+            print(f"Sisa stok untuk {jenis} {merek} {series} ukuran {ukuran}: {sisa_stok}")
+        else:
+            print("Jumlah yang diminta melebihi stok yang tersedia.")
+    else:
+        print("Barang tidak ditemukan.")
+
+# Memanggil fungsi kasir
+
+
+#==========================================================================================================================================
+program_awal()#==================================================================================================================================
+
 
 
