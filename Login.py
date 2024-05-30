@@ -1382,6 +1382,211 @@ def load_and_display_excel_data():
     # Menjalankan aplikasi
     root.mainloop()
 
+
+def print_nota():
+    window_nota = Tk()
+
+    window_nota.geometry("1080x720")
+    window_nota.configure(bg = "#FFFFFF")
+
+
+    canvas = Canvas(
+        window_nota,
+        bg = "#FFFFFF",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_nota.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: print("button_1 clicked"),
+        relief="flat"
+    )
+    button_1.place(
+        x=163.0,
+        y=621.0,
+        width=753.0,
+        height=62.0
+    )
+
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1_nota.png"))
+    image_1 = canvas.create_image(
+        540.0,
+        339.0,
+        image=image_image_1
+    )
+
+    canvas.create_text(
+        205.0,
+        218.0,
+        anchor="nw",
+        text=":",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        205.0,
+        268.0,
+        anchor="nw",
+        text=":",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        205.0,
+        318.0,
+        anchor="nw",
+        text=":",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        205.0,
+        368.0,
+        anchor="nw",
+        text=":",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        208.0,
+        438.0,
+        anchor="nw",
+        text=":",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        74.0,
+        318.0,
+        anchor="nw",
+        text="Harga",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        74.0,
+        438.0,
+        anchor="nw",
+        text="SUBTOTAL",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        74.0,
+        368.0,
+        anchor="nw",
+        text="Diskon",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        350.0,
+        70.0,
+        anchor="nw",
+        text="NOTA PEMBELIAN SEPATU",
+        fill="#000000",
+        font=("Poppins", 30 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        73.0,
+        268.0,
+        anchor="nw",
+        text="Ukuran",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        76.0,
+        218.0,
+        anchor="nw",
+        text="Produk ",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        225.0,
+        218.0,
+        anchor="nw",
+        text="QWERTYUIOP",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        225.0,
+        268.0,
+        anchor="nw",
+        text="ASDFG",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        225.0,
+        318.0,
+        anchor="nw",
+        text="HJKLZ",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        225.0,
+        368.0,
+        anchor="nw",
+        text="XCV",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        225.0,
+        438.0,
+        anchor="nw",
+        text="BNM",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_rectangle(
+        231.0,
+        118.99999999999986,
+        844.0,
+        124.0,
+        fill="#000000",
+        outline="")
+
+    canvas.create_rectangle(
+        29.0,
+        413.0,
+        1045.00048828125,
+        418.0,
+        fill="#000000",
+        outline="")
+    window_nota.resizable(False, False)
+    window_nota.mainloop()
+
 # Memanggil fungsi untuk memuat dan menampilkan data Excel
 
 
