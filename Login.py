@@ -829,7 +829,7 @@ def ud_stok():
         image=button_image_1, #entry 6 adalah  seri, 
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("button_1 clicked")],
+        command=lambda: [print("button_1 clicked"), submit_edit(ud_stok_entry_2, ud_stok_entry_1, ud_stok_entry_5, ud_stok_entry_6, ud_stok_entry_4, ud_stok_entry_3), window_ud_stok.destroy(),menu()],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -847,7 +847,7 @@ def ud_stok():
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: [print("button_2 clicked"), window_ud_stok.destroy(), tambah_produk()],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1109,7 +1109,7 @@ def tambah_produk():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("button_1 clicked"), tambah_data_excel(file_excel,ent_tambah_data_excel(tambah_produk_entry_2,tambah_produk_entry_1,tambah_produk_entry_5,tambah_produk_entry_6,tambah_produk_entry_4,tambah_produk_entry_3)),window.destroy(),menu()],
+        command=lambda: [print("button_1 clicked"), tambah_data_excel(file_excel,ent_tambah_data_excel(tambah_produk_entry_2,tambah_produk_entry_1,tambah_produk_entry_5,tambah_produk_entry_6, random.randint(10000000,99999999),tambah_produk_entry_4,tambah_produk_entry_3)),window.destroy(),menu()],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1387,7 +1387,7 @@ def load_and_display_excel_data():
 
 
 
-
+#==================================================================================================================================
 #==================================================================================================================================
 from openpyxl import load_workbook
 from openpyxl import Workbook
@@ -1402,7 +1402,7 @@ def tambah_data_excel(file_path, data):
         workbook = Workbook()
         sheet = workbook.active
         # Menambahkan header jika file baru
-        headers = ['jenis', 'merek', 'seri', 'ukuran', 'harga', 'jumlah']
+        headers = ['jenis', 'merek', 'seri', 'ukuran', "kode",  'harga', 'jumlah']
         sheet.append(headers)
 
     # Menambahkan data baru ke dalam sheet
@@ -1412,8 +1412,8 @@ def tambah_data_excel(file_path, data):
     workbook.save(file_path)
     print(f"Data berhasil ditambahkan ke {file_path}")
 
-def ent_tambah_data_excel(tambahproduk_entry_1,tambahproduk_entry_2,tambahproduk_entry_3,tambahproduk_entry_4,tambahproduk_entry_5,tambahproduk_entry_6):
-    data_sepatu = [tambahproduk_entry_1.get(),tambahproduk_entry_2.get(),tambahproduk_entry_3.get(),tambahproduk_entry_4.get(),tambahproduk_entry_5.get(),tambahproduk_entry_6.get()]
+def ent_tambah_data_excel(tambahproduk_entry_1,tambahproduk_entry_2,tambahproduk_entry_3,tambahproduk_entry_4, kodeid,tambahproduk_entry_5,tambahproduk_entry_6):
+    data_sepatu = [tambahproduk_entry_1.get(),tambahproduk_entry_2.get(),tambahproduk_entry_3.get(),tambahproduk_entry_4.get(), kodeid,tambahproduk_entry_5.get(),tambahproduk_entry_6.get()]
     return data_sepatu
 # Contoh penggunaan
 file_excel = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')
@@ -1422,6 +1422,56 @@ file_excel = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Pe
 #tambah_data_excel(file_excel, data_baru)
 
 #==================================================================================================================================
+import tkinter as tk
+from tkinter import messagebox
+import pandas as pd
+
+def edit_data(file_name, kode_produk=None, merek=None, seri=None, ukuran=None, harga=None, jumlah=None):
+    # Load data from Excel file
+    print(kode_produk,merek,seri, ukuran, harga, jumlah)
+    df = pd.read_excel(file_name)
+    
+    # If kode_produk is provided, update merek, seri, and ukuran accordingly
+    if kode_produk:
+        kode_row = df[df['kode'] == kode_produk].index
+        df.loc[kode_row, ['merek', 'series', 'ukuran']] = [merek, seri, ukuran]
+    
+    # If harga is provided, update harga
+    if harga is not None:
+        if kode_produk:
+            df.loc[kode_row, 'harga'] = harga
+        else:
+            data_row = df[(df['merek'] == merek) & (df['series'] == seri) & (df['ukuran'] == ukuran)].index
+            df.loc[data_row, 'harga'] = harga
+    
+    # If jumlah is provided, update jumlah
+    if jumlah is not None:
+        if kode_produk:
+            df.loc[kode_row, 'jumlah'] = jumlah
+        else:
+            data_row = df[(df['merek'] == merek) & (df['series'] == seri) & (df['ukuran'] == ukuran)].index
+            df.loc[data_row, 'jumlah'] = jumlah
+    
+    # Save the updated data to the Excel file
+    df.to_excel(file_name, index=False)
+
+def submit_edit(kode_entry,merek_entry,seri_entry,ukuran_entry,harga_entry,jumlah_entry):
+    # Get user inputs
+    kode_produk = kode_entry.get()
+    merek = merek_entry.get()
+    seri = seri_entry.get()
+    ukuran = ukuran_entry.get()
+    harga = harga_entry.get()
+    jumlah = jumlah_entry.get()
+    print(kode_produk,merek,seri, ukuran, harga, jumlah)
+    # Call edit_data function with user inputs
+    edit_data(os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx'), kode_produk, merek, seri, ukuran, harga, jumlah)
+    
+    # Show confirmation message
+    messagebox.showinfo("Info", "Data telah diubah.")
+
+#==================================================================================================================================
+
 program_awal()
 
 
