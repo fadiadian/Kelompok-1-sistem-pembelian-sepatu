@@ -3,7 +3,6 @@ import time
 import random
 from PIL import Image
 import openpyxl
-import os
 
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
@@ -234,7 +233,7 @@ def beli_sepatu(data_sepatu, file_path):
 def main_program():
     global metode_bayar
     input_customer()
-    file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')
+    file_path = 'Persediaan1.xlsx'
     data_sepatu = baca_data_dari_excel(file_path)
     while True:
         lihat_menu = pilih_menu()

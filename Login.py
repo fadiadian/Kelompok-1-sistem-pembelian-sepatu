@@ -8,19 +8,20 @@ import tkinter as tk
 import time
 import random
 from PIL import Image
+import bismillah as bs
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
 
 def relative_to_assets(path: str) -> str:
     # Mengembalikan path absolut
-    return os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'assets', 'frame0', path)
+    return os.path.join(os.getcwd(),'assets', 'frame0', path)
 
 
 #=============  V  verifikasi dan proses login  V  =================
 def verifikasi_login(username, password):
     # Menggunakan path absolut
-    file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'databaseuser', 'logindatabase.csv')
+    file_path = os.path.join(os.getcwd(), 'databaseuser', 'logindatabase.csv')
     
     try:
         with open(file_path, mode='r') as file:
@@ -55,7 +56,7 @@ def program_awal():
     window.configure(bg="#FFFFFF")
 
 
-    csv_file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')  # Ganti dengan path file CSV Anda
+    csv_file_path = os.path.join(os.getcwd(), 'Persediaan1.xlsx')  # Ganti dengan path file CSV Anda
     all_data = read_data_from_csv(csv_file_path)
     random_data = all_data.sample(n=8)
 
@@ -228,7 +229,7 @@ def menu():
         highlightthickness = 0,
         relief = "ridge"
     )
-    csv_file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')  # Ganti dengan path file CSV Anda
+    csv_file_path = os.path.join(os.getcwd(), 'Persediaan1.xlsx')  # Ganti dengan path file CSV Anda
     all_data = read_data_from_csv(csv_file_path)
     random_data = all_data.sample(n=8)
     canvas.place(x = 0, y = 0)
@@ -1339,7 +1340,7 @@ def kasir():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("button_1 clicked"), program_kasir(kasir_entry_2, kasir_entry_1, kasir_entry_4,kasir_entry_5, kasir_entry_3)],
+        command=lambda: [print("button_1 clicked"), print(kasir_entry_2.get(), kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), bs.GudangSepatu.kurangi_sepatu(bs.GudangSepatu(), kasir_entry_2.get(), kasir_entry_1.get(), kasir_entry_4.get(), kasir_entry_5.get(), kasir_entry_3.get()),window_kasir.destroy(), menu()],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1362,7 +1363,7 @@ def load_and_display_excel_data():
     root.title("Excel to GUI")
 
     # Membaca data dari file Excel menggunakan pandas
-    file_path = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')
+    file_path = os.path.join(os.getcwd(), 'Persediaan1.xlsx')
     df = pd.read_excel(file_path)
 
     # Membuat Treeview untuk menampilkan data Excel
@@ -1620,7 +1621,7 @@ def ent_tambah_data_excel(tambahproduk_entry_1,tambahproduk_entry_2,tambahproduk
     data_sepatu = [tambahproduk_entry_1.get(),tambahproduk_entry_2.get(),tambahproduk_entry_3.get(),tambahproduk_entry_4.get(), kodeid,tambahproduk_entry_5.get(),tambahproduk_entry_6.get()]
     return data_sepatu
 # Contoh penggunaan
-file_excel = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')
+file_excel = os.path.join(os.getcwd(),'Persediaan1.xlsx')
 #data_baru = ["Elektronik", "Samsung", "Galaxy S21", "6.2 inch", 10000000, 10]
 
 #tambah_data_excel(file_excel, data_baru)
@@ -1744,7 +1745,7 @@ import pandas as pd
 
 def program_kasir(kasir_entry_2, kasir_entry_1, kasir_entry_4,kasir_entry_5, kasir_entry_3):
     # Membaca file Excel
-    df = pd.read_excel(os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx'))
+    df = pd.read_excel(os.path.join(os.getcwd(), 'Persediaan1.xlsx'))
 
     # Meminta input dari pengguna
     jenis = kasir_entry_2.get()
