@@ -73,10 +73,10 @@ def handle_input(gudang):
     print("4. Trade-In")
     pilihan = input("Masukkan pilihan: ")
 
-    if pilihan == "1":
+    if pilihan == "1" or "Tampilkan Stok Sepatu":
         gudang.tampilkan_stok()
 
-    elif pilihan == "2":
+    elif pilihan == "2" or "Kasir":
         jenis_list = list(gudang.data_sepatu.index.get_level_values('jenis').unique())
         print("Daftar jenis sepatu:")
         for idx, jenis in enumerate(jenis_list, 1):
@@ -120,7 +120,7 @@ def handle_input(gudang):
         else:
             print("Pilihan jenis sepatu tidak valid.")
 
-    elif pilihan == "3":
+    elif pilihan == "3" or "Tambah Stok Sepatu":
         jenis_list = list(gudang.data_sepatu.index.get_level_values('jenis').unique())
         print("Daftar jenis sepatu:")
         for idx, jenis in enumerate(jenis_list, 1):
@@ -156,7 +156,7 @@ def handle_input(gudang):
         else:
             print("Pilihan jenis sepatu tidak valid.")
 
-    elif pilihan == "4":
+    elif pilihan == "4" or "Trade-In":
         jenis_list = list(gudang.data_sepatu.index.get_level_values('jenis').unique())
         print("Daftar jenis sepatu lama:")
         for idx, jenis in enumerate(jenis_list, 1):
