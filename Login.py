@@ -3,8 +3,8 @@ from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
 import os
 import pandas as pd
-
-import pandas as pd
+from tkinter import ttk
+import tkinter as tk
 import time
 import random
 from PIL import Image
@@ -532,7 +532,7 @@ def menu():
         image=menu_button_image_5,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("menu_button_5 clicked"), window_2.destroy(),beli_sepatu(), kasir()],
+        command=lambda: [print("menu_button_5 clicked"), window_2.destroy(), kasir()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -826,10 +826,10 @@ def ud_stok():
     button_image_1 = PhotoImage(
         file=relative_to_assets("button_1_ud_stock.png"))
     ud_stok_button_1 = Button(
-        image=button_image_1,
+        image=button_image_1, #entry 6 adalah  seri, 
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: [print("button_1 clicked")],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1385,13 +1385,6 @@ def load_and_display_excel_data():
 # Memanggil fungsi untuk memuat dan menampilkan data Excel
 
 
-
-#================================================================================================================================
-#=================================================== ini program backend ========================================================
-#================================================================================================================================
-nama_customer = ""
-metode_bayar = ""
-pesanan = []
 program_awal()
 
 
