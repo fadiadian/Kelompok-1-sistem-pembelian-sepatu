@@ -1104,11 +1104,12 @@ def tambah_produk():
 
     button_image_1 = PhotoImage(
         file=relative_to_assets("button_1_produk_baru.png"))
+    
     tambah_produk_button_1 = Button(
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: [print("button_1 clicked"), tambah_data_excel(file_excel,ent_tambah_data_excel(tambah_produk_entry_2,tambah_produk_entry_1,tambah_produk_entry_5,tambah_produk_entry_6,tambah_produk_entry_4,tambah_produk_entry_3)),window.destroy(),menu()],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1385,6 +1386,42 @@ def load_and_display_excel_data():
 # Memanggil fungsi untuk memuat dan menampilkan data Excel
 
 
+
+
+#==================================================================================================================================
+from openpyxl import load_workbook
+from openpyxl import Workbook
+
+def tambah_data_excel(file_path, data):
+    try:
+        # Coba membuka file yang sudah ada
+        workbook = load_workbook(file_path)
+        sheet = workbook.active
+    except FileNotFoundError:
+        # Jika file tidak ditemukan, buat file baru dengan sheet aktif
+        workbook = Workbook()
+        sheet = workbook.active
+        # Menambahkan header jika file baru
+        headers = ['jenis', 'merek', 'seri', 'ukuran', 'harga', 'jumlah']
+        sheet.append(headers)
+
+    # Menambahkan data baru ke dalam sheet
+    sheet.append(data)
+
+    # Menyimpan workbook
+    workbook.save(file_path)
+    print(f"Data berhasil ditambahkan ke {file_path}")
+
+def ent_tambah_data_excel(tambahproduk_entry_1,tambahproduk_entry_2,tambahproduk_entry_3,tambahproduk_entry_4,tambahproduk_entry_5,tambahproduk_entry_6):
+    data_sepatu = [tambahproduk_entry_1.get(),tambahproduk_entry_2.get(),tambahproduk_entry_3.get(),tambahproduk_entry_4.get(),tambahproduk_entry_5.get(),tambahproduk_entry_6.get()]
+    return data_sepatu
+# Contoh penggunaan
+file_excel = os.path.join(os.getcwd(), 'Kelompok-1-sistem-pembelian-sepatu', 'Persediaan1.xlsx')
+#data_baru = ["Elektronik", "Samsung", "Galaxy S21", "6.2 inch", 10000000, 10]
+
+#tambah_data_excel(file_excel, data_baru)
+
+#==================================================================================================================================
 program_awal()
 
 
