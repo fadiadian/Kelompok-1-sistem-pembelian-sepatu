@@ -8,7 +8,7 @@ import tkinter as tk
 import time
 import random
 from PIL import Image
-import bismillah as bs
+import bismillah2 as bs
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\Praktikum Prokom\Tubes clone\Kelompok-1-sistem-pembelian-sepatu\assets\frame0") #ini kynya udah gak kepake, soalnya udah pakai path absolut
@@ -215,6 +215,8 @@ def daftar_sepatu_menu(row):
    return tampil_daftar
 
 def menu():
+    global diskon
+    diskon = 0
     window_2 = Tk()
 
     window_2.geometry("1080x720")
@@ -560,7 +562,7 @@ def menu():
         image=menu_button_image_6,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("menu_button_6 clicked"),
+        command=lambda: [print("menu_button_6 clicked"), window_2.destroy(), tradein()],
         relief="flat",
         bg="#1A1E3E",
         activebackground="#1A1E3E"
@@ -1340,7 +1342,7 @@ def kasir():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("button_1 clicked"), print(kasir_entry_2.get(), kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), bs.GudangSepatu.kurangi_sepatu(bs.GudangSepatu(), kasir_entry_2.get(), kasir_entry_1.get(), kasir_entry_4.get(), kasir_entry_5.get(), kasir_entry_3.get()),window_kasir.destroy(), menu()],
+        command=lambda: [print("button_1 clicked"), print(kasir_entry_2.get(), kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), bs.kurangi_sepatu(os.path.join(os.getcwd(), 'Persediaan1.xlsx'),pd.read_excel(os.path.join(os.getcwd(), 'Persediaan1.xlsx')),kasir_entry_2.get(),kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), print_nota(win = window_kasir, merek=kasir_entry_1.get(), seri=kasir_entry_4.get(), ukuran=kasir_entry_5.get(), jumlah=kasir_entry_3.get(), harga=get_harga_by_series_and_size(kasir_entry_4.get(),kasir_entry_5.get()))],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1384,7 +1386,9 @@ def load_and_display_excel_data():
     root.mainloop()
 
 
-def print_nota():
+def print_nota(win, merek, seri, ukuran, jumlah, harga=2000000):
+    win.destroy()
+    global diskon
     window_nota = Tk()
 
     window_nota.geometry("1080x720")
@@ -1408,7 +1412,7 @@ def print_nota():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: [print("button_1 clicked"), window_nota.destroy(), menu()],
         relief="flat"
     )
     button_1.place(
@@ -1529,7 +1533,7 @@ def print_nota():
         225.0,
         218.0,
         anchor="nw",
-        text="QWERTYUIOP",
+        text=f"{merek} seri {seri} \t Jumlah \t : {jumlah} pasang",
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1538,7 +1542,7 @@ def print_nota():
         225.0,
         268.0,
         anchor="nw",
-        text="ASDFG",
+        text=f"{ukuran}",
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1547,7 +1551,7 @@ def print_nota():
         225.0,
         318.0,
         anchor="nw",
-        text="HJKLZ",
+        text=f"{harga}",
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1556,7 +1560,7 @@ def print_nota():
         225.0,
         368.0,
         anchor="nw",
-        text="XCV",
+        text=f"{diskon}",
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1565,7 +1569,7 @@ def print_nota():
         225.0,
         438.0,
         anchor="nw",
-        text="BNM",
+        text= (float(harga) * float(jumlah)) - float(diskon),
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1588,10 +1592,235 @@ def print_nota():
     window_nota.resizable(False, False)
     window_nota.mainloop()
 
+def tradein():
+    global diskon
+    window_tradein = Tk()
+
+    window_tradein.geometry("1080x720")
+    window_tradein.configure(bg = "#01041A")
+
+
+    canvas = Canvas(
+        window_tradein,
+        bg = "#01041A",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1_tradein.png"))
+    image_1 = canvas.create_image(
+        317.0,
+        343.0,
+        image=image_image_1
+    )
+
+    entry_image_1 = PhotoImage(
+        file=relative_to_assets("entry_1_tradein.png"))
+    entry_bg_1 = canvas.create_image(
+        454.5,
+        277.0,
+        image=entry_image_1
+    )
+    entry_1 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_1.place(
+        x=375.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        360.0,
+        206.0,
+        anchor="nw",
+        text="Merek",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_2 = PhotoImage(
+        file=relative_to_assets("entry_2_tradein.png"))
+    entry_bg_2 = canvas.create_image(
+        212.5,
+        277.0,
+        image=entry_image_2
+    )
+    entry_2 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_2.place(
+        x=133.0,
+        y=250.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        118.0,
+        206.0,
+        anchor="nw",
+        text="Jenis",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_3 = PhotoImage(
+        file=relative_to_assets("entry_3_tradein.png"))
+    entry_bg_3 = canvas.create_image(
+        212.5,
+        390.0,
+        image=entry_image_3
+    )
+    entry_3 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_3.place(
+        x=133.0,
+        y=363.0,
+        width=159.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        118.0,
+        319.0,
+        anchor="nw",
+        text="Seri",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_4 = PhotoImage(
+        file=relative_to_assets("entry_4_tradein.png"))
+    entry_bg_4 = canvas.create_image(
+        333.5,
+        495.0,
+        image=entry_image_4
+    )
+    entry_4 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_4.place(
+        x=133.0,
+        y=468.0,
+        width=401.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        118.0,
+        424.0,
+        anchor="nw",
+        text="Harga",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    entry_image_5 = PhotoImage(
+        file=relative_to_assets("entry_5_tradein.png"))
+    entry_bg_5 = canvas.create_image(
+        417.5,
+        390.0,
+        image=entry_image_5
+    )
+    entry_5 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0,
+        font=("Poppins", 25 * -1)
+    )
+    entry_5.place(
+        x=375.0,
+        y=363.0,
+        width=85.0,
+        height=52.0
+    )
+
+    canvas.create_text(
+        360.0,
+        319.0,
+        anchor="nw",
+        text="Ukuran",
+        fill="#FFFFFF",
+        font=("Poppins Regular", 25 * -1)
+    )
+
+    canvas.create_text(
+        56.0,
+        32.0,
+        anchor="nw",
+        text="Trade-In",
+        fill="#FFFFFF",
+        font=("Poppins", 40 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        71.0,
+        150.0,
+        anchor="nw",
+        text="Data sepatu lama",
+        fill="#FFFFFF",
+        font=("Poppins", 25 * -1, 'bold')
+    )
+
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_tradein.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: [print("button_1 clicked"), print(entry_1.get(),entry_2.get(),entry_3.get(),entry_4.get(),entry_5.get()), set_diskon(entry_4.get()), window_tradein.destroy(), kasir()],
+        relief="flat",
+        bg = "#01041A",
+        activebackground="#01041A"
+    )
+    button_1.place(
+        x=112.0,
+        y=589.0,
+        width=847.0,
+        height=57.0
+    )
+
+    image_image_2 = PhotoImage(
+        file=relative_to_assets("image_2_tradein.png"))
+    image_2 = canvas.create_image(
+        830.0,
+        340.0,
+        image=image_image_2
+    )
+    window_tradein.resizable(False, False)
+    window_tradein.mainloop()
+
 # Memanggil fungsi untuk memuat dan menampilkan data Excel
 
 
-
+def set_diskon(val):
+    global diskon
+    diskon = val
 #==================================================================================================================================
 #==================================================================================================================================
 from openpyxl import load_workbook
@@ -1776,9 +2005,29 @@ def program_kasir(kasir_entry_2, kasir_entry_1, kasir_entry_4,kasir_entry_5, kas
     else:
         print("Barang tidak ditemukan.")
 
+import pandas as pd
+
+def get_harga_by_series_and_size(series, ukuran):
+    # Membaca data dari file Excel
+    file_path=os.path.join(os.getcwd(), 'Persediaan1.xlsx')
+    data_sepatu = pd.read_excel(file_path)
+
+    # Melakukan pencarian berdasarkan series dan ukuran
+    result = data_sepatu[(data_sepatu['series'] == series) & (data_sepatu['ukuran'] == ukuran)]
+
+    if not result.empty:
+        # Jika ada hasil, kembalikan harga
+        harga = result.iloc[0]['harga']
+        return harga
+    
+    else:
+        return 2000000
+
+# Contoh pemanggilan fungsi
+
 # Memanggil fungsi kasir
 
-
+diskon = 0
 #==========================================================================================================================================
 program_awal()#==================================================================================================================================
 
