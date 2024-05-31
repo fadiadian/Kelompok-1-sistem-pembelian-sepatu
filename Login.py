@@ -1,3 +1,4 @@
+
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import csv
@@ -215,6 +216,7 @@ def daftar_sepatu_menu(row):
    return tampil_daftar
 
 def menu():
+    set_sepatu('', '', 0, 0)
     global diskon
     diskon = 0
     window_2 = Tk()
@@ -1127,6 +1129,11 @@ def tambah_produk():
     window.mainloop()
 
 def kasir():
+    global harga
+    global merek
+    global seri
+    global jumlah
+    global ukuran
     window_kasir = Tk()
 
     window_kasir.geometry("1080x720")
@@ -1342,7 +1349,7 @@ def kasir():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: [print("button_1 clicked"), print(kasir_entry_2.get(), kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), bs.kurangi_sepatu(os.path.join(os.getcwd(), 'Persediaan1.xlsx'),pd.read_excel(os.path.join(os.getcwd(), 'Persediaan1.xlsx')),kasir_entry_2.get(),kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), print_nota(win = window_kasir, merek=kasir_entry_1.get(), seri=kasir_entry_4.get(), ukuran=kasir_entry_5.get(), jumlah=kasir_entry_3.get(), harga=get_harga_by_series_and_size(kasir_entry_4.get(),kasir_entry_5.get()))],
+        command=lambda: [print("button_1 clicked"), print(kasir_entry_2.get(), kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), set_sepatu(kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()), bs.kurangi_sepatu(os.path.join(os.getcwd(), 'Persediaan1.xlsx'),pd.read_excel(os.path.join(os.getcwd(), 'Persediaan1.xlsx')),kasir_entry_2.get(),kasir_entry_1.get(),kasir_entry_4.get(),kasir_entry_5.get(),kasir_entry_3.get()),window_kasir.destroy(), metode_pembayaran()],
         bg="#01041A",
         activebackground="#01041A",
         relief="flat"
@@ -1386,9 +1393,14 @@ def load_and_display_excel_data():
     root.mainloop()
 
 
-def print_nota(win, merek, seri, ukuran, jumlah, harga=2000000):
-    win.destroy()
+def print_nota():
+    
     global diskon
+    global merek
+    global seri
+    global harga
+    global jumlah
+    global ukuran
     window_nota = Tk()
 
     window_nota.geometry("1080x720")
@@ -1479,7 +1491,7 @@ def print_nota(win, merek, seri, ukuran, jumlah, harga=2000000):
         74.0,
         318.0,
         anchor="nw",
-        text="Harga",
+        text="Harga satuan",
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1551,7 +1563,7 @@ def print_nota(win, merek, seri, ukuran, jumlah, harga=2000000):
         225.0,
         318.0,
         anchor="nw",
-        text=f"{harga}",
+        text=f"{harga} \t Total :"+ str(int(harga)*int(jumlah)),
         fill="#000000",
         font=("Poppins", 20 * -1, 'bold')
     )
@@ -1815,8 +1827,255 @@ def tradein():
     window_tradein.resizable(False, False)
     window_tradein.mainloop()
 
+def metode_pembayaran():
+    global merek
+    global seri
+    global ukuran
+    global jumlah
+    window_mp = Tk()
+
+    window_mp.geometry("1080x720")
+    window_mp.configure(bg = "#141414")
+
+
+    canvas = Canvas(
+        window_mp,
+        bg = "#141414",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    canvas.create_text(
+        72.99999999999994,
+        133.0,
+        anchor="nw",
+        text="Pilih metode pembayaran",
+        fill="#FFFFFF",
+        font=("montserrat", 30 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        72.99999999999994,
+        58.0,
+        anchor="nw",
+        text="Metode Pembayaran",
+        fill="#0057FF",
+        font=("montserrat", 50 * -1, 'bold')
+    )
+
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_metode.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: [print("button_1 clicked"), window_mp.destroy(), qris()],
+        relief="flat",
+        bg="#141414",
+        activebackground="#141414"
+    )
+    button_1.place(
+        x=357.99999999999994,
+        y=226.0,
+        width=295.0,
+        height=328.0
+    )
+
+    button_image_2 = PhotoImage(
+        file=relative_to_assets("button_2_metode.png"))
+    button_2 = Button(
+        image=button_image_2,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: [print("button_2 clicked"), window_mp.destroy(),print_nota()],
+        relief="flat",
+        bg="#141414",
+        activebackground="#141414"
+    )
+    button_2.place(
+        x=20.999999999999943,
+        y=226.0,
+        width=336.0,
+        height=328.0
+    )
+
+    canvas.create_rectangle(
+        745.0,
+        0.0,
+        1080.0,
+        720.0,
+        fill="#1F1F1F",
+        outline="")
+
+    canvas.create_text(
+        786.0,
+        80.0,
+        anchor="nw",
+        text="Pembelian",
+        fill="#FFFFFF",
+        font=("montserrat", 30 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        786.0,
+        143.0,
+        anchor="nw",
+        text=f'{merek} seri {seri}',
+        fill="#FFFFFF",
+        font=("montserrat Regular", 20 * -1)
+    )
+
+    canvas.create_text(
+        786.0,
+        178.0,
+        anchor="nw",
+        text=f"Ukuran \t : {ukuran}",
+        fill="#FFFFFF",
+        font=("montserrat Regular", 20 * -1)
+    )
+
+    canvas.create_text(
+        786.0,
+        248.0,
+        anchor="nw",
+        text=f"Diskon \t : {diskon}",
+        fill="#FFFFFF",
+        font=("montserrat Regular", 20 * -1)
+    )
+
+    canvas.create_text(
+        786.0,
+        283.0,
+        anchor="nw",
+        text="Subtotal \t : "+str((float(harga) * float(jumlah)) - float(diskon)),
+        fill="#FFFFFF",
+        font=("montserrat", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        784.0,
+        213.0,
+        anchor="nw",
+        text=f"Jumlah \t : {jumlah}",
+        fill="#FFFFFF",
+        font=("montserrat Regular", 20 * -1)
+    )
+    window_mp.resizable(False, False)
+    window_mp.mainloop()
+
+def qris():
+    window_qris = Tk()
+
+    window_qris.geometry("1080x720")
+    window_qris.configure(bg = "#141414")
+
+
+    canvas = Canvas(
+        window_qris,
+        bg = "#141414",
+        height = 720,
+        width = 1080,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
+
+    canvas.place(x = 0, y = 0)
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1_qris.png"))
+    image_1 = canvas.create_image(
+        540.0,
+        360.0,
+        image=image_image_1
+    )
+
+    canvas.create_text(
+        73.0,
+        133.0,
+        anchor="nw",
+        text="Nontunai",
+        fill="#000000",
+        font=("Poppins", 30 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        73.0,
+        208.0,
+        anchor="nw",
+        text="Trasnsfer bank ke",
+        fill="#000000",
+        font=("Poppins", 20 * -1, 'bold')
+    )
+
+    canvas.create_text(
+        73.0,
+        248.0,
+        anchor="nw",
+        text="Mandiri \n104976349648 \t \t a.n. Fadia Dian Ambarrizka",
+        fill="#000000",
+        font=("Poppins Regular", 20 * -1)
+    )
+
+    canvas.create_text(
+        74.0,
+        316.0,
+        anchor="nw",
+        text="BRI\n6632 0102 3871 530 \t a.n. Ferrel Rafi Elian",
+        fill="#000000",
+        font=("Poppins Regular", 20 * -1)
+    )
+
+    canvas.create_text(
+        74.0,
+        390.0,
+        anchor="nw",
+        text="BNI\n1786806019 \t \t a.n. Atha Nabilah Aurellia",
+        fill="#000000",
+        font=("Poppins Regular", 20 * -1)
+    )
+
+    canvas.create_text(
+        71.0,
+        58.0,
+        anchor="nw",
+        text="Metode Pembayaran",
+        fill="#0057FF",
+        font=("Poppins", 45 * -1, "bold")
+    )
+
+    button_image_1 = PhotoImage(
+        file=relative_to_assets("button_1_qris.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: [print("button_1 clicked"),window_qris.destroy(),print_nota()],
+        relief="flat"
+    )
+    button_1.place(
+        x=87.0,
+        y=601.0,
+        width=428.0,
+        height=72.0
+    )
+    window_qris.resizable(False, False)
+    window_qris.mainloop()
+
 # Memanggil fungsi untuk memuat dan menampilkan data Excel
 
+def set_sepatu(me, se, uk, ju):
+    global merek
+    global seri
+    global ukuran
+    global jumlah
+    merek = me
+    seri = se
+    ukuran=uk
+    jumlah=ju
 
 def set_diskon(val):
     global diskon
@@ -1887,6 +2146,8 @@ def edit_data(file_name, kode_produk=None, merek=None, seri=None, ukuran=None, h
     
     # Save the updated data to the Excel file
     df.to_excel(file_name, index=False)
+
+harga = int(random.randint(75,200))*10000
 
 def submit_edit(kode_entry,merek_entry,seri_entry,ukuran_entry,harga_entry,jumlah_entry):
     # Get user inputs
@@ -2026,6 +2287,10 @@ def get_harga_by_series_and_size(series, ukuran):
 # Contoh pemanggilan fungsi
 
 # Memanggil fungsi kasir
+merek = ''
+seri = ''
+ukuran = 0
+jumlah = 0
 
 diskon = 0
 #==========================================================================================================================================
